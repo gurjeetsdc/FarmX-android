@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "585672129128",
+    "project_id": "firebase-farmx"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585672129128:android:2b05165075da1c3b",
+        "android_client_info": {
+          "package_name": "com.sdei.farmx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585672129128-agi623mub00mv56o8c4clhn6psupjae4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sdei.farmx",
+            "certificate_hash": "202406e33cca4b14afce7dc1454ceba710b1387a"
+          }
+        },
+        {
+          "client_id": "585672129128-h2afsbeubjue8gfpintk2h0mqj5o6t8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvt_6Sf4aL9CqK-FqZjaqpy9QX__SPTkw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.sdei.farmx.dataobject.User" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_40"
+                android:paddingEnd="@dimen/dimen_40"
+                android:paddingStart="@dimen/dimen_40">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_80"
+                    android:background="@drawable/ic_login_logo"
+                    android:contentDescription="@string/app_name" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fname_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/fname_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_20"
+                        android:drawableStart="@drawable/ic_login_user_name"
+                        android:hint="@string/first_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+
+                        android:text="@={user.firstName}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lname_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/lname_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_login_user_name"
+                        android:hint="@string/last_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={user.lastName}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/email_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/email_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_login_user_name"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:text="@={user.email}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/mobile_number_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/mobile_number_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:hint="@string/mobile_number"
+                        android:inputType="number"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28"
+                        app:text="@{user.phone}" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/password_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/password_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_login_password"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:text="@={user.password}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/state_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/state_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_location"
+                        android:hint="@string/state"
+                        android:inputType="text"
+                        android:text="@={user.state}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/distt_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/distt_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_location"
+                        android:hint="@string/password"
+                        android:inputType="text"
+                        android:text="@={user.district}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/city_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/city_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_reg_city"
+                        android:hint="@string/city"
+                        android:inputType="text"
+                        android:text="@={user.city}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/register_btn_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_50"
+                    android:background="@drawable/rounded_button"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_34"
+                    android:textStyle="bold"
+                    app:colorFilter="@{@color/green}"
+                    app:textCaps="@{@string/register}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/already_have_account"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_30" />
+
+                    <TextView
+                        android:id="@+id/login_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:onClick="onClick"
+                        android:paddingEnd="@dimen/dimen_10"
+                        android:paddingStart="@dimen/dimen_10"
+                        android:text="@string/login_here"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_30"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/back_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_20">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/ic_arrow_back_black_svg" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</layout>

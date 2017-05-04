@@ -1,0 +1,25 @@
+<resources>
+
+    <string name="app_name">eFarmX</string>
+
+    <string name="select_language">زبان کا انتخاب کریں</string>
+    <string name="search">کی تلاش</string>
+
+    <string name="crops">فصلیں</string>
+    <string name="services">سروسز</string>
+    <string name="land">لینڈ</string>
+    <string name="call_us">ہمیں بلائیں</string>
+    <string name="farm_inputs">فارم آدانوں</string>
+    <string name="farm_equipments">فارم سازوسامان</string>
+    <string name="my_account">میرا اکاونٹ</string>
+    <string name="sign_out">باہر جائیں</string>
+    <string name="my_crops">میری فصلیں</string>
+    <string name="my_bids">میری بولیاں</string>
+    <string name="my_orders">میرے احکام</string>
+    <string name="my_bookings">میری بکنگ</string>
+    <string name="notifications">نوٹیفیکیشن</string>
+    <string name="settings">ترتیبات</string>
+    <string name="contact_us">ہم سے رابطہ کریں</string>
+    <string name="lease_land">لیز لینڈ</string>
+
+</resources>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="item"
+            type="com.sdei.farmx.dataobject.NavigationDrawerItem" />
+
+        <variable
+            name="callback"
+            type="com.sdei.farmx.callback.RecyclerCallback"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/parent_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen_12"
+            android:paddingStart="@dimen/dimen_30"
+            android:paddingEnd="@dimen/dimen_30"
+            android:paddingTop="@dimen/dimen_12"
+            android:onClick="@{() -> callback.onItemClick(item.index)}">
+
+            <ImageView
+                android:id="@+id/icon_iv"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:contentDescription="@string/app_name"
+                app:background="@{item.drawable}"/>
+
+            <TextView
+                android:id="@+id/item_name_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/dimen_18"
+                android:paddingEnd="@dimen/dimen_18"
+                android:text="@={item.itemName}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_26" />
+
+            <ImageView
+                android:id="@+id/arrow_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@drawable/ic_nav_arrow"
+                android:contentDescription="@string/app_name"
+                android:autoMirrored="true"
+                android:rotation="0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_child_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_50"
+            android:layout_marginStart="@dimen/dimen_50"
+            android:orientation="vertical"
+            app:child_views="@{item.childItems}"
+            app:child_callback="@{callback}"
+            android:visibility="@{item.checked ? View.VISIBLE : View.GONE}"/>
+
+        <View
+            android:id="@+id/divider_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_light"
+            android:visibility="@{item.showDivider ? View.VISIBLE : View.GONE}"/>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="green">#40ac35</color>
+    <color name="white">#ffffff</color>
+    <color name="amber">#E27407</color>
+    <color name="black">#000000</color>
+    <color name="text_black">#464646</color>
+    <color name="grey_light">#bababa</color>
+    <color name="transparent">#00000000</color>
+    <color name="amber_end">#FF8216</color>
+    <color name="amber_start">#EEB100</color>
+    <color name="amber_slider">#EE8C1D</color>
+    <color name="facebook_blue">#3865ab</color>
+    <color name="google_red">#CB3F1F</color>
+
+    <color name="dialog_trans_background">#00000000</color>
+    <color name="crop_green">#63b721</color>
+
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.sdei.farmx.dataobject.User"/>
+
+    </data>
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_200"
+        android:background="@color/amber"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingStart="@dimen/dimen_20"
+        android:paddingEnd="@dimen/dimen_20"
+        android:paddingTop="@dimen/dimen_10">
+
+        <ImageView
+            android:id="@+id/app_nav_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:background="@drawable/ic_drawer_logo"
+            android:contentDescription="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/name_tv">
+
+            <com.sdei.farmx.customview.CircleImageView
+                android:id="@+id/profile_iv"
+                android:layout_width="@dimen/dimen_74"
+                android:layout_height="@dimen/dimen_74"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/ic_default_profile_pic" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/user_id_tv"
+            android:paddingTop="@dimen/dimen_10"
+            android:text="@={user.firstName}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_32" />
+
+        <TextView
+            android:id="@+id/user_id_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@{`id: ` + user.id}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_22" />
+
+    </RelativeLayout>
+
+</layout>

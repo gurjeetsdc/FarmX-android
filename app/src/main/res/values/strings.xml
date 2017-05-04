@@ -1,0 +1,129 @@
+<resources>
+    <string name="app_name">eFarmX</string>
+
+    <string name="select_language">SELECT LANGUAGE</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="my_account">My Account</string>
+    <string name="crops">Crops</string>
+    <string name="farm_inputs">Farm Inputs</string>
+    <string name="farm_equipments">Farm Equipments</string>
+    <string name="lease_land">Lease Land</string>
+    <string name="services">Services</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_bookings">My Bookings</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="contact_us">Contact us</string>
+    <string name="sign_out">Sign out</string>
+    <string name="my_crops">My Crops</string>
+    <string name="my_bids">My Bids</string>
+    <string name="search">Search</string>
+    <string name="land">Land</string>
+    <string name="call_us">Call Us</string>
+    <string name="equipments">Equipments</string>
+
+    <string name="buy_crop">Buy Crop</string>
+    <string name="sell_crop">Sell Crop</string>
+    <string name="buy_equipments">Buy Equipments</string>
+    <string name="sell_equipments">Sell Equipments</string>
+    <string name="rent_equipments">Rent Equipments</string>
+    <string name="buy_land">Buy Land</string>
+    <string name="sell_land">Sell Land</string>
+
+    <string name="publish_now">PUBLISH NOW</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="signin_with_social_accounts">or signin with your social accounts</string>
+    <string name="login_facebook">Login with Facebook</string>
+    <string name="login_google">Login with Google</string>
+    <string name="don_t_have_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="forgot">Forgot?</string>
+    <string name="network_not_available">Your internet connection is slow. Please check your network connection and try again.</string>
+
+    <string name="english">English</string>
+    <string name="hindi">हिंदी</string>
+    <string name="urdu">اردو</string>
+
+    <string name="key_crops">crops</string>
+    <string name="key_farm_inputs">farm_inputs</string>
+    <string name="key_farm_equipments">farm_equipments</string>
+    <string name="key_land">land</string>
+    <string name="key_services">services</string>
+    <string name="key_call_us">call_us</string>
+
+    <string name="key_buy_crop">buy_crop</string>
+    <string name="key_sell_crop">sell_crop</string>
+    <string name="key_buy_equipments">buy_equipments</string>
+    <string name="key_sell_equipments">sell_equipments</string>
+    <string name="key_rent_equipments">rent_equipments</string>
+    <string name="key_buy_land">buy_land</string>
+    <string name="key_sell_land">sell_land</string>
+    <string name="key_lease_land">lease_land</string>
+
+    <string name="lang_key_english">en</string>
+    <string name="lang_key_hindi">hi</string>
+    <string name="lang_key_urdu">ur</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="email">Email</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="city">City/Village</string>
+    <string name="state">State</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="login_here">Login here</string>
+    <string name="upload_image">Upload image</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="add_image">Add Image</string>
+
+    <string name="permission_denied_message">Please allow permission(s) to have a good experience of FarmX. By denying the permission(s) you might have some bad experience.</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="re_try">RE-TRY</string>
+    <string name="i_am_sure">I\'M SURE</string>
+    <string name="done">Done</string>
+
+    <string-array name="home_tab_items">
+        <item>@string/crops</item>
+        <item>@string/farm_inputs</item>
+        <item>@string/farm_equipments</item>
+        <item>@string/land</item>
+        <item>@string/services</item>
+        <item>@string/call_us</item>
+    </string-array>
+
+    <string-array name="home_tab_items_key">
+        <item>@string/key_crops</item>
+        <item>@string/key_farm_inputs</item>
+        <item>@string/key_farm_equipments</item>
+        <item>@string/key_land</item>
+        <item>@string/key_services</item>
+        <item>@string/key_call_us</item>
+    </string-array>
+
+    <integer-array name="home_tab_items_drawable">
+        <item>@drawable/ic_crop</item>
+        <item>@drawable/ic_farm_inputs</item>
+        <item>@drawable/ic_farm_equipements</item>
+        <item>@drawable/ic_land</item>
+        <item>@drawable/ic_services</item>
+        <item>@drawable/ic_call_us</item>
+    </integer-array>
+
+    <string-array name="languages">
+        <item>@string/english</item>
+        <item>@string/hindi</item>
+        <item>@string/urdu</item>
+    </string-array>
+
+    <string-array name="language_keys">
+        <item>@string/lang_key_english</item>
+        <item>@string/lang_key_hindi</item>
+        <item>@string/lang_key_urdu</item>
+    </string-array>
+
+</resources>

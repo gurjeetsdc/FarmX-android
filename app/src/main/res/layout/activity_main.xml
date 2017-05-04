@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="header"
+            type="com.sdei.farmx.dataobject.AppHeaderObject" />
+
+    </data>
+
+    <android.support.v4.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:fitsSystemWindows="true">
+
+            <RelativeLayout
+                android:id="@+id/header_parent_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:background_drawable="@{header.backgroundDrawable}"
+                app:background_color="@{header.backgroundColor}">
+
+                <RelativeLayout
+                    android:id="@+id/header_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true">
+
+                    <LinearLayout
+                        android:id="@+id/nav_menu_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:baselineAligned="false"
+                        android:onClick="onClick"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@{header.backgroundDrawable == 0 ? @dimen/dimen_30 : @dimen/dimen_10}"
+                        android:paddingEnd="@dimen/dimen_30"
+                        android:paddingStart="@dimen/dimen_30"
+                        android:paddingTop="@{header.backgroundDrawable == 0 ? @dimen/dimen_30 : @dimen/dimen_10}">
+
+                        <ImageView
+                            android:id="@+id/nav_menu_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_hamburg"
+                            android:contentDescription="@string/app_name" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/header_logo_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:background="@drawable/ic_header_logo"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="@{header.hasCenteredImage ? View.VISIBLE : View.GONE}" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/search_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header_rl"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:paddingEnd="@dimen/dimen_30"
+                    android:paddingStart="@dimen/dimen_30"
+                    android:visibility="@{header.showSearch ? View.VISIBLE : View.GONE}">
+
+                    <RelativeLayout
+                        android:id="@+id/search_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dimen_4">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@+id/search_ic"
+                            android:background="@color/transparent"
+                            android:gravity="start|center_vertical"
+                            android:hint="@string/search"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:padding="@dimen/dimen_8"
+                            android:textDirection="inherit"
+                            android:textSize="@dimen/dimen_28" />
+
+                        <ImageView
+                            android:id="@+id/search_ic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/dimen_6"
+                            android:background="@drawable/ic_search"
+                            android:contentDescription="@string/app_name" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/main_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header_parent_rl" />
+
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true">
+
+            <LinearLayout
+                android:id="@+id/navigation_view_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/nav_items_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+        </android.support.design.widget.NavigationView>
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+</layout>

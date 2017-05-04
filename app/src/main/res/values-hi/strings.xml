@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">eFarmX</string>
+
+    <string name="select_language">भाषा चुनिए</string>
+    <string name="search">खोज</string>
+
+    <string name="crops">फसल</string>
+    <string name="services">सेवाएं</string>
+
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/top_menu"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_my_account"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/my_account" />
+
+    </group>
+
+    <group
+        android:id="@+id/content_menu"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_crops"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/crops" />
+        <item
+            android:id="@+id/nav_farm_inputs"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/farm_inputs" />
+        <item
+            android:id="@+id/nav_farm_equipments"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/farm_equipments" />
+        <item
+            android:id="@+id/nav_lease_land"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/lease_land" />
+        <item
+            android:id="@+id/nav_services"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/services" />
+    </group>
+
+    <group
+        android:id="@+id/middle_menu"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_my_orders"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/my_orders" />
+        <item
+            android:id="@+id/nav_my_bookings"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/my_bookings" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/notifications" />
+
+    </group>
+
+    <group
+        android:id="@+id/bottom_menu"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_contact_us"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/contact_us" />
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/sign_out" />
+
+    </group>
+
+</menu>
