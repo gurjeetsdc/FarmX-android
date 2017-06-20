@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="com.sdei.farmx.helper.utils.AppConstants" />
+
+        <import type="com.sdei.farmx.dataobject.TabItem" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sdei.farmx.dataobject.FarmInput" />
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.fragment.InputDetailFragment" />
+
+        <variable
+            name="tabs"
+            type="java.util.ArrayList&lt;TabItem&gt;" />
+
+        <variable
+            name="weightUnits"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/footer_ll"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_350">
+
+                    <com.sdei.farmx.customview.CustomPager
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:autoScroll="@{false}"
+                        app:handleVisibility="@{true}"
+                        app:pagerAdapter="@{data.images}"
+                        app:resource="@{R.layout.row_image_pager}"
+                        app:type="@{`inputs`}" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#f0f0f0"
+                        android:gravity="center"
+                        android:text="@string/no_image"
+                        android:visibility="@{(data.images == null || data.images.size() == 0) ? View.VISIBLE : View.GONE}" />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_20"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/dimen_20"
+                        app:attachToPager="@{pager}"
+                        app:tabBackground="@drawable/pager_gray_tab_selector"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabPaddingEnd="@dimen/dimen_16"
+                        app:tabPaddingStart="@dimen/dimen_16"
+                        app:visibilityBasedOnArrayList="@{data.images}" />
+
+                    <LinearLayout
+                        android:id="@+id/left_arrow_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{handler::onClick}"
+                        android:padding="@dimen/dimen_10">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:rotation="180"
+                            android:tint="@color/gray_dark"
+                            app:srcCompat="@drawable/ic_nav_arrow"
+                            app:visibilityBasedOnArrayList="@{data.images}" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/right_arrow_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{handler::onClick}"
+                        android:padding="@dimen/dimen_10">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:tint="@color/gray_dark"
+                            app:srcCompat="@drawable/ic_nav_arrow"
+                            app:visibilityBasedOnArrayList="@{data.images}" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_30"
+                    android:layout_marginStart="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{data.name}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_28" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4"
+                            android:text="@{data.category.name}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            app:visibility="@{data.category.name}" />
+
+                        <TextView
+                            android:id="@+id/variety_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4"
+                            android:text="@{data.variety}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            app:visibility="@{data.variety}" />
+
+                        <TextView
+                            android:id="@+id/manufacturer_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4"
+                            android:text="@{data.manufacturer.name}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_28"
+                            app:currencyText="@{data.price}" />
+
+                        <TextView
+                            android:id="@+id/weight_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4"
+                            android:text="@{data.quantity+` `+data.quantityUnit + ` (` +@string/available+`)`}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <TextView
+                            android:id="@+id/wish_list_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8"
+                            android:background="@drawable/shape_rectangle_rounded"
+                            android:drawablePadding="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_8"
+                            android:paddingEnd="@dimen/dimen_20"
+                            android:paddingStart="@dimen/dimen_20"
+                            android:paddingTop="@dimen/dimen_8"
+                            android:text="@string/add_to_wishlist"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_20"
+                            app:drawableStart="@{R.drawable.ic_wish_list}" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_30"
+                    android:layout_marginStart="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@drawable/white_shape_with_corner"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10"
+                    app:colorFilter="@{@color/detail_grey}">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/price"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            app:currencyTextWithPrefix="@{data.price}"
+                            app:prefix="@{``}"
+                            app:suffix="@{`/`+data.priceUnit}" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/quantity"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatEditText
+                                android:id="@+id/quantity_et"
+                                android:layout_width="@dimen/dimen_120"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:hint="@string/zero"
+                                android:inputType="number"
+                                android:maxLength="6"
+                                android:maxLines="1"
+                                android:text="@{data.requiredQuantity}"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/dimen_24"
+                                app:backgroundTint="@color/text_black" />
+
+                            <Spinner
+                                android:id="@+id/quantity_unit_spinner"
+                                style="@style/gray_spinner_theme"
+                                android:layout_width="@dimen/dimen_140"
+                                android:layout_height="wrap_content"
+                                app:defaultSpinnerAdapter="@{weightUnits}"
+                                app:selectedItem="@{data.selectedQuantityUnit}" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_24"
+                            app:currencyText="@{data.totalPrice}" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60"
+                    android:layout_marginTop="@dimen/dimen_30">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/detail_grey" />
+
+                    <android.support.design.widget.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pager="@{viewPager}"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/crop_green"
+                        app:tabIndicatorHeight="2dp"
+                        app:tabMode="fixed"
+                        app:tabs="@{tabs}" />
+
+                </RelativeLayout>
+
+                <com.sdei.farmx.customview.CustomPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:autoScroll="@{false}"
+                    app:handleVisibility="@{false}"
+                    app:pagerAdapter="@{tabs}"
+                    app:resource="@{R.layout.row_input_detail_pager}"
+                    app:type="@{`inputs`}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:background="@color/detail_grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_30"
+                    android:layout_marginStart="@dimen/dimen_30"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_marginEnd="@dimen/dimen_30"
+                    android:layout_marginStart="@dimen/dimen_30"
+                    android:text="@{data.additionalInformation}"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_22"
+                    app:visibility="@{data.additionalInformation}" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/footer_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <include
+                android:id="@+id/footer"
+                layout="@layout/footer"
+                app:firstActionDrawable="@{``}"
+                app:firstActionLabel="@{@string/book_now}"
+                app:footerColor="@{@color/input}"
+                app:handler="@{handler}"
+                app:secondActionDrawable="@{``}"
+                app:secondActionLabel="@{@string/add_to_cart}" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

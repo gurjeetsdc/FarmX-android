@@ -239,8 +239,8 @@ public class NotificationUtils {
         notificationManager.cancelAll();
     }
 
-    public static long getTimeMilliSec(String timeStamp) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static long getTimeMilliSec(String timeStamp) {
+        SimpleDateFormat format = AppUtils.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = format.parse(timeStamp);
             return date.getTime();

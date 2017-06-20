@@ -5,19 +5,16 @@
 
     <data>
 
-        <import type="java.util.ArrayList" />
-
+        <import type="com.sdei.farmx.R"/>
         <import type="android.view.View" />
-
-        <import type="com.sdei.farmx.dataobject.SingleSelectionItem" />
 
         <variable
             name="itemClickListener"
             type="com.sdei.farmx.callback.RecyclerCallback" />
 
         <variable
-            name="items"
-            type="ArrayList&lt;SingleSelectionItem&gt;" />
+            name="item"
+            type="com.sdei.farmx.dataobject.RecyclerBindingList" />
 
         <variable
             name="header"
@@ -65,8 +62,9 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:item_click_listener="@{itemClickListener}"
-                app:items="@{items}" />
+                app:onItemClickListener="@{itemClickListener}"
+                app:recyclerLinearAdapter="@{item}"
+                app:layout="@{R.layout.row_single_selection}"/>
 
         </LinearLayout>
 

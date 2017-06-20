@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="com.sdei.farmx.dataobject.TabItem" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="cropData"
+            type="com.sdei.farmx.dataobject.Crop" />
+
+        <variable
+            name="bidData"
+            type="com.sdei.farmx.dataobject.CropBid" />
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.fragment.CropBidUserDetailFragment" />
+
+        <variable
+            name="tabs"
+            type="java.util.ArrayList&lt;TabItem&gt;" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/detail_grey"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_30">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/category_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{cropData.categoryObj.name}"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_24"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/category_name_tv"
+                    android:layout_toStartOf="@+id/amount_tv"
+                    android:text="@{` (`+cropData.variety+`)`}"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_24"
+                    app:visibility="@{cropData.variety}" />
+
+                <TextView
+                    android:id="@+id/amount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_24"
+                    android:textStyle="bold"
+                    app:currencyText="@{cropData.price}" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_30">
+
+                <com.sdei.farmx.customview.CircleImageView
+                    android:id="@+id/profile_iv"
+                    android:layout_width="@dimen/dimen_74"
+                    android:layout_height="@dimen/dimen_74"
+                    android:contentDescription="@string/app_name"
+                    app:srcCompat="@drawable/ic_default_profile_pic" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_toEndOf="@+id/profile_iv"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{bidData.userObj.firstName+` `+bidData.userObj.lastName}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:textUserAddress="@{bidData.userObj}" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/accept_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:background="@drawable/white_shape_with_corner"
+                android:gravity="center_vertical"
+                android:onClick="@{handler::onClick}"
+                android:orientation="horizontal"
+                android:visibility="@{handler.isAccepted(bidData.status, View.GONE, View.VISIBLE)}"
+                app:colorFilter="@{@color/crop_green}">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dimen_6"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28"
+                        android:textStyle="bold"
+                        app:drawableStart="@{R.drawable.ic_accept_bid}"
+                        app:textCaps="@{@string/accept_bid}" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/black_trans_shape_with_end_corner"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/dimen_30"
+                    android:paddingStart="@dimen/dimen_30"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_28"
+                    app:currencyText="@{bidData.amount}" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_30"
+            android:layout_marginStart="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:visibility="@{handler.isAccepted(bidData.status, View.VISIBLE, View.GONE)}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:background="@drawable/white_shape_with_corner"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                app:colorFilter="@{@color/detail_grey}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_60"
+                    android:text="@{@string/deal_made_with+`: `+ bidData.userObj.firstName+` `+bidData.userObj.lastName}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_34" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:textColor="@color/amber"
+                    android:textSize="@dimen/dimen_40"
+                    android:textStyle="bold"
+                    app:currencyTextWithPrefix="@{bidData.amount}"
+                    app:prefix="@{@string/deal_price+`: `}"
+                    app:suffix="@{``}"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="@string/current_bid_status"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_28" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dimen_100"
+                android:layout_height="@dimen/dimen_100"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/round_shape_with_stroke"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_60"
+                    android:layout_height="@dimen/dimen_60"
+                    android:contentDescription="@string/app_name"
+                    app:srcCompat="@drawable/ic_thumb" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_30">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/detail_grey" />
+
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:pager="@{viewPager}"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/crop_green"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="fixed"
+                app:tabs="@{tabs}" />
+
+        </RelativeLayout>
+
+        <com.sdei.farmx.customview.CustomPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:autoScroll="@{false}"
+            app:handleVisibility="@{false}"
+            app:pagerAdapter="@{tabs}"
+            app:type="@{`crops`}"
+            app:resource="@{R.layout.row_detail_pager}" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.dialog.EnterOtpDialog" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_34">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dimen_34"
+            android:background="@color/amber_end"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/amber"
+                android:padding="@dimen/dimen_12">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/one_time_password"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_36" />
+
+                <ImageView
+                    android:id="@+id/cross_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:onClick="@{handler::onClick}"
+                    app:srcCompat="@drawable/ic_cross" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:background="@drawable/ic_login_logo"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/enter_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:gravity="center"
+                android:text="@string/enter_the_otp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_36" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/otp_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_20"
+                android:inputType="number"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_36"
+                app:backgroundTint="@color/white" />
+
+            <TextView
+                android:id="@+id/submit_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@drawable/rounded_button"
+                android:gravity="center"
+                android:onClick="@{handler::onClick}"
+                android:paddingBottom="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_34"
+                android:textStyle="bold"
+                app:colorFilter="@{@color/green}"
+                app:textCaps="@{@string/submit}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

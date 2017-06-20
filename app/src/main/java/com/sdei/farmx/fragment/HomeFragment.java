@@ -28,6 +28,7 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
 
     /**
      * Called when a fragment is first attached to its context
+     *
      * @param context
      */
     @Override
@@ -38,6 +39,7 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
 
     /**
      * Called to have the fragment instantiate its user interface view
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -48,10 +50,8 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_home,
-                container,
-                false);
+        FragmentHomeBinding binding
+                = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         tabLayout = binding.tabsTl;
         return binding.getRoot();
     }
@@ -59,11 +59,13 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
     /**
      * Called when the fragment's activity has been created
      * and this fragment's view hierarchy instantiated
+     *
      * @param savedInstanceState
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        changeAppHeader(this, null);
         setTabsLayoutItems();
     }
 
@@ -83,7 +85,8 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
 
         for (int i = 0; i < tabItems.length; i++) {
 
-            CustomTabBinding binding = DataBindingUtil.inflate(LayoutInflater.from(activityContext), R.layout.custom_tab, tabLayout, false);
+            CustomTabBinding binding
+                    = DataBindingUtil.inflate(LayoutInflater.from(activityContext), R.layout.custom_tab, tabLayout, false);
 
             int id = tabItemsDrawable.getResourceId(i, -1);
 
@@ -105,25 +108,31 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
     }
 
     /**
-     *
      * Handles the tab click action and perform required action
-     * @param view view on which click has performed
-     * @param object Tab item detail
      *
+     * @param object Tab item detail
      */
-    public void onTabClicked(View view, HomeTabItem object) {
+    public void onTabClicked(HomeTabItem object) {
 
+//        if (object.getKey().equalsIgnoreCase(getString(R.string.key_crops))
+//                || object.getKey().equalsIgnoreCase(getString(R.string.key_equipments))
+//                || object.getKey().equalsIgnoreCase(getString(R.string.key_land))) {
+//
+//            openSingleSelectionDialog(getItemsArrayList(object.getKey()));
+//
+//        }
         if (object.getKey().equalsIgnoreCase(getString(R.string.key_crops))
-                || object.getKey().equalsIgnoreCase(getString(R.string.key_farm_equipments))
-                || object.getKey().equalsIgnoreCase(getString(R.string.key_land))) {
+                || object.getKey().equalsIgnoreCase(getString(R.string.key_equipments))) {
 
             openSingleSelectionDialog(getItemsArrayList(object.getKey()));
-
-        } else if (object.getKey().equalsIgnoreCase(getString(R.string.key_farm_inputs))) {
 
         } else if (object.getKey().equalsIgnoreCase(getString(R.string.key_services))) {
 
         } else if (object.getKey().equalsIgnoreCase(getString(R.string.key_call_us))) {
+
+        } else if(object.getKey().equalsIgnoreCase(getString(R.string.key_farm_inputs))) {
+
+            openFragment(new InputDashboardFragment());
 
         }
 
@@ -131,6 +140,7 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
 
     /**
      * open the list item dialog
+     *
      * @param arrayList items to show over the dialog
      */
     private void openSingleSelectionDialog(final ArrayList<SingleSelectionItem> arrayList) {
@@ -141,10 +151,22 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
             public void onItemClick(int position) {
 
                 if (arrayList.get(position).getKey().equalsIgnoreCase(getString(R.string.key_sell_crop))) {
-                    //openLoginPage();
-                    openFragment(new AddCropFragment());
+
+                    openAddCropPage(false, null);
+
                 } else if (arrayList.get(position).getKey().equalsIgnoreCase(getString(R.string.key_buy_crop))) {
-                    openFragment(new BuyCropFragment());
+
+                    openFragment(new CropDashboardFragment());
+
+                } else if (arrayList.get(position).getKey().equalsIgnoreCase(getString(R.string.key_buy_equipments))) {
+
+                    openFragment(new EquipmentDashboardFragment());
+
+                } else if (arrayList.get(position).getKey().equalsIgnoreCase(getString(R.string.key_sell_equipments))
+                        || arrayList.get(position).getKey().equalsIgnoreCase(getString(R.string.key_rent_equipments))) {
+
+                    openAddEquipmentFragment(arrayList.get(position).getKey(), null);
+
                 }
 
                 dialog.dismiss();
@@ -155,6 +177,7 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
             public void onChildItemClick(int parentIndex, int childIndex) {
 
             }
+
         });
         dialog.show();
 
@@ -170,41 +193,44 @@ public class HomeFragment extends AppFragment implements View.OnClickListener {
 
             items.add(AppUtils.getSingleSelectionItem(0,
                     getString(R.string.key_buy_crop),
-                    getString(R.string.buy_crop),
+                    getString(R.string.buy),
                     drawable));
             items.add(AppUtils.getSingleSelectionItem(1,
                     getString(R.string.key_sell_crop),
-                    getString(R.string.sell_crop),
+                    getString(R.string.sell),
                     drawable));
 
-        } else if (key.equalsIgnoreCase(getString(R.string.key_farm_equipments))) {
+        } else if (key.equalsIgnoreCase(getString(R.string.key_equipments))) {
 
             items.add(AppUtils.getSingleSelectionItem(0,
                     getString(R.string.key_buy_equipments),
-                    getString(R.string.buy_equipments),
+                    getString(R.string.buy),
                     drawable));
             items.add(AppUtils.getSingleSelectionItem(1,
                     getString(R.string.key_sell_equipments),
-                    getString(R.string.sell_equipments),
-                    drawable));
-            items.add(AppUtils.getSingleSelectionItem(2,
-                    getString(R.string.key_rent_equipments),
-                    getString(R.string.rent_equipments),
+                    getString(R.string.sell_rent),
                     drawable));
 
         } else if (key.equalsIgnoreCase(getString(R.string.key_land))) {
 
             items.add(AppUtils.getSingleSelectionItem(0,
                     getString(R.string.key_buy_land),
-                    getString(R.string.buy_land),
+                    getString(R.string.buy),
                     drawable));
             items.add(AppUtils.getSingleSelectionItem(1,
                     getString(R.string.key_sell_land),
-                    getString(R.string.sell_land),
+                    getString(R.string.sell_lease),
                     drawable));
-            items.add(AppUtils.getSingleSelectionItem(2,
-                    getString(R.string.key_lease_land),
-                    getString(R.string.lease_land),
+
+        } else if (key.equalsIgnoreCase(getString(R.string.key_farm_inputs))) {
+
+            items.add(AppUtils.getSingleSelectionItem(0,
+                    getString(R.string.key_buy_input),
+                    getString(R.string.buy_input),
+                    drawable));
+            items.add(AppUtils.getSingleSelectionItem(1,
+                    getString(R.string.key_sell_input),
+                    getString(R.string.sell_input),
                     drawable));
 
         }

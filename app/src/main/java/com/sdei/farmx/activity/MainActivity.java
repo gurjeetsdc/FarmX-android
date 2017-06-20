@@ -10,39 +10,49 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.sdei.farmx.R;
-import com.sdei.farmx.adapter.NavigationItemsAdapter;
+import com.sdei.farmx.apimanager.ApiManager;
+import com.sdei.farmx.callback.DialogCallback;
 import com.sdei.farmx.callback.RecyclerCallback;
 import com.sdei.farmx.dataobject.AppHeaderObject;
+import com.sdei.farmx.dataobject.RecyclerBindingList;
 import com.sdei.farmx.dataobject.NavigationDrawerItem;
-import com.sdei.farmx.dataobject.User;
 import com.sdei.farmx.databinding.ActivityMainBinding;
 import com.sdei.farmx.databinding.NavHeaderMainBinding;
-import com.sdei.farmx.fragment.AddCropFragment;
-import com.sdei.farmx.fragment.BuyCropFragment;
+import com.sdei.farmx.dataobject.NavigationHeader;
+import com.sdei.farmx.fragment.CropAddFragment;
+import com.sdei.farmx.fragment.CropBidListFragment;
+import com.sdei.farmx.fragment.CropBidUserDetailFragment;
+import com.sdei.farmx.fragment.CropDashboardFragment;
+import com.sdei.farmx.fragment.CropDetailFragment;
+import com.sdei.farmx.fragment.CropMyBidsFragment;
+import com.sdei.farmx.fragment.CropMyCropsFragment;
+import com.sdei.farmx.fragment.EquipmentAddFragment;
+import com.sdei.farmx.fragment.EquipmentMyEquipmentsFragment;
+import com.sdei.farmx.fragment.InputDashboardFragment;
+import com.sdei.farmx.fragment.CropMoreItemsFragment;
 import com.sdei.farmx.fragment.HomeFragment;
+import com.sdei.farmx.fragment.InputDetailFragment;
+import com.sdei.farmx.helper.AppInstance;
 import com.sdei.farmx.helper.preferences.MyPreference;
 import com.sdei.farmx.helper.preferences.PreferenceConstant;
 import com.sdei.farmx.helper.utils.AppConstants;
@@ -52,62 +62,23 @@ import com.sdei.farmx.helper.utils.NotificationUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class MainActivity extends AppActivity implements View.OnClickListener {
+public class MainActivity extends AppActivity
+        implements View.OnClickListener, RecyclerCallback {
 
     private static final int APP_PERMISSIONS = 101;
     private static final int REQUEST_IMAGE_CAPTURE = 102;
-    private static final int REQUEST_GALLERY = 103;
+    private static final int REQUEST_CUSTOM_GALLERY = 103;
 
     private int permissionAction;
 
     private LinearLayout navigationViewLl;
-
     private DrawerLayout drawer;
-
-    private RecyclerView navRecyclerView;
-
-    private NavigationItemsAdapter nAdapter;
-    private ArrayList<NavigationDrawerItem> navItemsArrayList;
-
-    private AppHeaderObject headerObject;
-
+    private RecyclerBindingList<NavigationDrawerItem> bindingList;
     private String mCurrentPhotoPath;
-
-    RecyclerCallback recyclerCallback = new RecyclerCallback() {
-        @Override
-        public void onItemClick(int position) {
-
-            NavigationDrawerItem object = navItemsArrayList.get(position);
-
-            if (object.getChildItems() != null
-                    && object.getChildItems().size() > 0) {
-
-                navItemsArrayList.get(position).setChecked(!navItemsArrayList.get(position).isChecked());
-
-            } else {
-
-                drawer.closeDrawer(GravityCompat.START);
-
-            }
-
-        }
-
-        @Override
-        public void onChildItemClick(int parentIndex, int childIndex) {
-
-            navItemsArrayList.get(parentIndex).setChecked(!navItemsArrayList.get(parentIndex).isChecked());
-            nAdapter.notifyDataSetChanged();
-            drawer.closeDrawer(GravityCompat.START);
-
-        }
-
-    };
 
     private BroadcastReceiver mRegistrationBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -131,22 +102,42 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
 
     };
 
+    BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (!AppUtils.hasNetworkConnection(context)
+                    && ApiManager.communicatingToServer) {
+                ApiManager.communicatingToServer = false;
+                Toast.makeText(context, "Internet not available", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    };
+
     /**
      * Called when the activity is first created.
      * This is where we do all of our normal static set up: create views,
      * bind data to lists, etc.
+     *
      * @param savedInstanceState containing the activity's previously frozen state, if there was one.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        ActivityMainBinding binding
+                = DataBindingUtil.setContentView(this, R.layout.activity_main);
         headerObject = new AppHeaderObject();
         binding.setHeader(headerObject);
 
+        bindingList = new RecyclerBindingList();
+        bindingList.setItemsList(new ArrayList<NavigationDrawerItem>());
+        binding.setItem(bindingList);
+        binding.setCallback(MainActivity.this);
+
         drawer = binding.drawerLayout;
         navigationViewLl = binding.navigationViewLl;
-        navRecyclerView = binding.navItemsRv;
 
         bindData();
 
@@ -156,17 +147,41 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction("android.net.wifi.STATE_CHANGE");
+        registerReceiver(networkChangeReceiver, filter);
+
         // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(AppConstants.Notification.REGISTRATION_COMPLETE));
+        LocalBroadcastManager
+                .getInstance(this)
+                .registerReceiver(mRegistrationBroadcastReceiver,
+                        new IntentFilter(AppConstants.Notification.REGISTRATION_COMPLETE));
 
         // register new push message receiver
         // by doing this, the activity will be notified each time a new message arrives
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(AppConstants.Notification.PUSH_NOTIFICATION));
+        LocalBroadcastManager
+                .getInstance(this)
+                .registerReceiver(mRegistrationBroadcastReceiver,
+                        new IntentFilter(AppConstants.Notification.PUSH_NOTIFICATION));
 
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
+        updateNavigationDrawerItems();
+
+    }
+
+    private void updateNavigationDrawerItems() {
+
+        initUserObject();
+        setNavigationViewHeader();
+        ArrayList<NavigationDrawerItem> dataList = bindingList.getItemsList();
+        dataList.clear();
+        AppUtils.getNavigationItemsList(dataList, MainActivity.this);
+        bindingList.setItemsList(dataList);
+
+        if (bindingList.getAdapter() != null)
+            bindingList.getAdapter().notifyDataSetChanged();
 
     }
 
@@ -174,8 +189,17 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     protected void onPause() {
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(networkChangeReceiver);
         super.onPause();
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(networkChangeReceiver);
+        super.onDestroy();
+        AppInstance.appUser = null;
     }
 
     @Override
@@ -185,16 +209,28 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
 
             drawer.closeDrawer(GravityCompat.START);
 
-        } else if (AppConstants.FragmentConstant.fragment instanceof AddCropFragment
-                || AppConstants.FragmentConstant.fragment instanceof BuyCropFragment) {
+        } else if (AppConstants.FragmentConstant.fragment instanceof HomeFragment) {
+
+            finishActivity(MainActivity.this);
+
+        } else if (AppConstants.FragmentConstant.fragment instanceof CropAddFragment) {
 
             AppUtils.finishFragment(getSupportFragmentManager(),
                     AppConstants.FragmentConstant.fragment);
-            changeAppHeader(AppConstants.FragmentConstant.fragment);
+            if (AppConstants.FragmentConstant.fragment instanceof CropMyCropsFragment) {
+                AppUtils.finishFragment(getSupportFragmentManager(),
+                        AppConstants.FragmentConstant.fragment);
+                openMyCropsPage(MainActivity.this);
+            }
+            changeAppHeader(AppConstants.FragmentConstant.fragment,
+                    getTitleName(AppConstants.FragmentConstant.fragment));
 
-        } else if (AppConstants.FragmentConstant.fragment instanceof HomeFragment) {
+        } else {
 
-            finish();
+            AppUtils.finishFragment(getSupportFragmentManager(),
+                    AppConstants.FragmentConstant.fragment);
+            changeAppHeader(AppConstants.FragmentConstant.fragment,
+                    getTitleName(AppConstants.FragmentConstant.fragment));
 
         }
 
@@ -207,6 +243,13 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
 
             case R.id.nav_menu_ll:
                 drawer.openDrawer(Gravity.START);
+                break;
+
+            case R.id.home_ll:
+                AppUtils.clearFragmentStack(getSupportFragmentManager());
+                changeAppHeader(
+                        AppConstants.FragmentConstant.fragment,
+                        getTitleName(AppConstants.FragmentConstant.fragment));
                 break;
 
         }
@@ -242,16 +285,116 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         if (requestCode == REQUEST_IMAGE_CAPTURE
                 && resultCode == RESULT_OK) {
 
-            if (AppConstants.FragmentConstant.fragment instanceof AddCropFragment) {
-                AddCropFragment fragment = (AddCropFragment) AppConstants.FragmentConstant.fragment;
+            if (AppConstants.FragmentConstant.fragment instanceof CropAddFragment) {
+                CropAddFragment fragment = (CropAddFragment) AppConstants.FragmentConstant.fragment;
+                fragment.afterCameraClick(mCurrentPhotoPath);
+            } else if (AppConstants.FragmentConstant.fragment instanceof EquipmentAddFragment) {
+                EquipmentAddFragment fragment = (EquipmentAddFragment) AppConstants.FragmentConstant.fragment;
                 fragment.afterCameraClick(mCurrentPhotoPath);
             }
 
-        } else if (requestCode == REQUEST_GALLERY
+        } else if (requestCode == REQUEST_CUSTOM_GALLERY
                 && resultCode == Activity.RESULT_OK) {
 
-            String[] all_path = data.getStringExtra("data").split("\\|");
+            String[] paths = data.getStringExtra("data").split("\\|");
 
+            if (AppConstants.FragmentConstant.fragment instanceof CropAddFragment) {
+                CropAddFragment fragment = (CropAddFragment) AppConstants.FragmentConstant.fragment;
+                fragment.fetchedImagesFromGallery(paths);
+            } else if (AppConstants.FragmentConstant.fragment instanceof EquipmentAddFragment) {
+                EquipmentAddFragment fragment = (EquipmentAddFragment) AppConstants.FragmentConstant.fragment;
+                fragment.fetchedImagesFromGallery(paths);
+            }
+
+        } else if (resultCode == Activity.RESULT_OK) {
+
+            performPendingTaskBeforeLogin(requestCode);
+
+        }
+
+    }
+
+    private void performPendingTaskBeforeLogin(int pendingTask) {
+
+        switch (pendingTask) {
+
+            case AppConstants.PendingTask.SESSION_EXPIRED:
+                performPendingTaskBeforeSessionExpired();
+                break;
+
+            case AppConstants.PendingTask.ADD_CROP:
+                openAddCropPage(MainActivity.this, false, null);
+                break;
+
+            case AppConstants.PendingTask.ADD_EQUIPMENT:
+                openAddEquipmentFragment(MainActivity.this, equipmentActionType, null);
+                break;
+
+            case AppConstants.PendingTask.MY_CROPS:
+                openMyCropsPage(MainActivity.this);
+                break;
+
+            case AppConstants.PendingTask.MY_EQUIPMENTS:
+                openMyEquipmentsFragment(MainActivity.this);
+                break;
+
+            case AppConstants.PendingTask.MY_BIDS:
+                openMyBidsPage(MainActivity.this);
+                break;
+
+            case AppConstants.PendingTask.NO_TASK:
+                refreshCurrentPageListingData();
+                break;
+
+        }
+
+    }
+
+    private void refreshCurrentPageListingData() {
+
+        if (AppConstants.FragmentConstant.fragment instanceof InputDashboardFragment) {
+
+            InputDashboardFragment fragment = (InputDashboardFragment) AppConstants.FragmentConstant.fragment;
+            fragment.fetchInputsList();
+
+        } else if (AppConstants.FragmentConstant.fragment instanceof CropDashboardFragment) {
+
+            CropDashboardFragment fragment = (CropDashboardFragment) AppConstants.FragmentConstant.fragment;
+            fragment.fetchCropListing();
+
+        } else if (AppConstants.FragmentConstant.fragment instanceof CropMoreItemsFragment) {
+
+            CropMoreItemsFragment fragment = (CropMoreItemsFragment) AppConstants.FragmentConstant.fragment;
+            fragment.fetchCropListing();
+
+        } else if (AppConstants.FragmentConstant.fragment instanceof CropDetailFragment) {
+
+            CropDetailFragment fragment = (CropDetailFragment) AppConstants.FragmentConstant.fragment;
+            fragment.fetchPageData();
+
+        } else if (AppConstants.FragmentConstant.fragment instanceof InputDetailFragment) {
+
+//            InputDetailFragment fragment = (InputDetailFragment) AppConstants.FragmentConstant.fragment;
+//            fragment.fetchPageData();
+
+        }
+
+    }
+
+    private void performPendingTaskBeforeSessionExpired() {
+
+        if (AppConstants.FragmentConstant.fragment instanceof CropAddFragment) {
+
+            CropAddFragment fragment = (CropAddFragment) AppConstants.FragmentConstant.fragment;
+            fragment.bindData();
+
+        } else if (AppConstants.FragmentConstant.fragment instanceof EquipmentAddFragment) {
+
+            EquipmentAddFragment fragment = (EquipmentAddFragment) AppConstants.FragmentConstant.fragment;
+            fragment.bindData();
+
+        } else {
+            refreshCurrentPageListingData();
         }
 
     }
@@ -262,29 +405,118 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
      */
     void bindData() {
 
-        setNavigationItemsAdapter();
-
-        HomeFragment fragment = new HomeFragment();
-        AppUtils.openFragment(getSupportFragmentManager(), fragment);
-        changeAppHeader(fragment);
+        navHeader = new NavigationHeader();
+        openHomePage();
 
     }
 
-    /**
-     * set the Navigation Drawer menu items
-     */
-    private void setNavigationItemsAdapter() {
+    private void openHomePage() {
 
-        navItemsArrayList = AppUtils.getNavigationItemsList(MainActivity.this);
-        setNavigationViewHeader();
+        HomeFragment fragment = new HomeFragment();
+        AppUtils.openHomeFragment(getSupportFragmentManager(), fragment);
+        changeAppHeader(fragment, null);
 
-        nAdapter = new NavigationItemsAdapter(navItemsArrayList, recyclerCallback);
+    }
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+    private void performNavigationItemAction(int position) {
 
-        navRecyclerView.setLayoutManager(mLayoutManager);
-        navRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        navRecyclerView.setAdapter(nAdapter);
+        NavigationDrawerItem item = bindingList.getItemsList().get(position);
+
+//        if (item.getKey().equals(getString(R.string.key_equipments))) {
+//
+//            openMyEquipmentsFragment(MainActivity.this);
+//
+//        } else
+        if (item.getKey().equals(getString(R.string.key_farm_inputs))) {
+
+            openFragment(new InputDashboardFragment());
+
+        } else if (item.getKey().equals(getString(R.string.key_log_out))) {
+
+            AppUtils.openPNAlertDialog(
+                    MainActivity.this,
+                    getString(R.string.message_logout),
+                    getString(R.string.ok),
+                    new DialogCallback() {
+                        @Override
+                        public void onSuccess() {
+
+                            AppUtils.logoutUser(MainActivity.this);
+                            updateNavigationDrawerItems();
+
+                            if (AppConstants.FragmentConstant.fragment instanceof CropAddFragment
+                                    || AppConstants.FragmentConstant.fragment instanceof CropMyBidsFragment
+                                    || AppConstants.FragmentConstant.fragment instanceof CropMyCropsFragment
+                                    || AppConstants.FragmentConstant.fragment instanceof EquipmentMyEquipmentsFragment
+                                    || AppConstants.FragmentConstant.fragment instanceof EquipmentAddFragment
+                                    || AppConstants.FragmentConstant.fragment instanceof CropBidListFragment
+                                    || AppConstants.FragmentConstant.fragment instanceof CropBidUserDetailFragment) {
+
+                                AppUtils.clearFragmentStack(getSupportFragmentManager());
+                                changeAppHeader(
+                                        AppConstants.FragmentConstant.fragment,
+                                        getTitleName(AppConstants.FragmentConstant.fragment));
+
+                            } else {
+                                refreshCurrentPageListingData();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+
+                    });
+
+        } else if (item.getKey().equals(getString(R.string.key_loging))
+                || (!isUserLoggedIn() && item.getKey().equals(getString(R.string.key_my_account)))) {
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    openLoginActivity(
+                            MainActivity.this,
+                            "login",
+                            AppConstants.PendingTask.NO_TASK);
+                }
+            }, 500);
+
+        } else {
+
+            Toast.makeText(MainActivity.this, "In progress", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    private void performNavigationChildAction(int parentIndex, int childIndex) {
+
+        ArrayList<NavigationDrawerItem> childItems
+                = bindingList.getItemsList().get(parentIndex).getChildItems();
+
+        if (childItems.get(childIndex).getKey().equals(getString(R.string.key_my_crops))) {
+            openMyCropsPage(MainActivity.this);
+        } else if (childItems.get(childIndex).getKey().equals(getString(R.string.key_my_bids))) {
+            openMyBidsPage(MainActivity.this);
+        } else {
+            Toast.makeText(this, "In progress", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void openMyBidsPage(final Context context) {
+
+        if (isUserLoggedIn()) {
+
+            openFragment(new CropMyBidsFragment());
+
+        } else {
+
+            showLoginToContinueAlert(context, AppConstants.PendingTask.MY_BIDS);
+
+        }
 
     }
 
@@ -293,46 +525,18 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
      */
     private void setNavigationViewHeader() {
 
+        if (navigationViewLl.getChildCount() > 1) {
+            navigationViewLl.removeViewAt(0);
+        }
+
         NavHeaderMainBinding binding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.nav_header_main,
                 navigationViewLl,
                 false);
-        User user = new User();
-        user.setFirstName("Rahul Sharma");
-        user.setId("123456789");
-        binding.setUser(user);
+        binding.setUser(AppInstance.appUser);
+        binding.setHeader(navHeader);
 
         navigationViewLl.addView(binding.getRoot(), 0);
-
-    }
-
-    /**
-     * Change the app header depending upon current fragment instance.
-     *
-     * @param fragment instance to change the App header accordingly
-     */
-    public void changeAppHeader(Fragment fragment) {
-
-        if (fragment instanceof HomeFragment) {
-
-            headerObject.setBackgroundDrawable(R.drawable.dashboard_amber_gradient);
-            headerObject.setBackgroundColor(0);
-            headerObject.setHasCenteredImage(true);
-            headerObject.setShowSearch(true);
-
-            AppUtils.setStatusBarTint(this, R.color.amber);
-
-        } else if (fragment instanceof AddCropFragment
-                || fragment instanceof BuyCropFragment) {
-
-            headerObject.setBackgroundDrawable(0);
-            headerObject.setBackgroundColor(R.color.crop_green);
-            headerObject.setShowSearch(false);
-            headerObject.setHasCenteredImage(false);
-
-            AppUtils.setStatusBarTint(this, R.color.crop_green);
-
-        }
 
     }
 
@@ -391,18 +595,14 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             return;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-        builder.setTitle(getString(R.string.permission_denied));
-        builder.setMessage(getString(R.string.permission_denied_message));
-        builder.setCancelable(false);
-
-        builder.setPositiveButton(positiveButtonText,
-                new DialogInterface.OnClickListener() {
+        AppUtils.openPNAlertDialogWithTitle(
+                MainActivity.this,
+                getString(R.string.permission_denied),
+                getString(R.string.permission_denied_message),
+                positiveButtonText,
+                new DialogCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
+                    public void onSuccess() {
 
                         if (requestPermissionRationale) {
                             ActivityCompat.requestPermissions(MainActivity.this, permissions,
@@ -418,16 +618,10 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                                     true);
 
                         }
-
                     }
-                });
 
-        builder.setNegativeButton(getString(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
+                    public void onFailure() {
 
                         if (!alreadyAskForPermission
                                 && !requestPermissionRationale) {
@@ -437,9 +631,8 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                         }
 
                     }
-                });
 
-        builder.show();
+                });
 
     }
 
@@ -460,10 +653,18 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.sdei.farmx.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+
+                Uri uri;
+
+                if (Build.VERSION.SDK_INT > 23) {
+                    uri = FileProvider.getUriForFile(this,
+                            "com.sdei.farmx.fileprovider",
+                            photoFile);
+                } else {
+                    uri = Uri.fromFile(photoFile);
+                }
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -473,10 +674,11 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     /**
      * returns the File path to save the camera image
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp
-                = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+                = AppUtils.getSimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -485,31 +687,53 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                 storageDir      /* directory */
         );
 
+        if (!image.exists()) {
+            image.getParentFile().mkdirs();
+            image.createNewFile();
+        }
+
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
-    /**
-     * will open the Gallery app
-     */
-    public void openGallery() {
+    public void openCustomGallery(int remainingCount) {
+        Intent intent = new Intent(AppConstants.CustomGallery.ACTION_MULTIPLE_PICK);
+        intent.putExtra("count", remainingCount);
+        startActivityForResult(intent, REQUEST_CUSTOM_GALLERY);
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY);
+    @Override
+    public void onItemClick(int position) {
+
+        NavigationDrawerItem object = bindingList.getItemsList().get(position);
+
+        if (object.getChildItems() != null
+                && object.getChildItems().size() > 0) {
+
+            bindingList.getItemsList()
+                    .get(position)
+                    .setChecked(!bindingList.getItemsList().get(position).isChecked());
+
         } else {
-            openCustomGallery();
+
+            drawer.closeDrawer(GravityCompat.START);
+            performNavigationItemAction(position);
+
         }
 
     }
 
-    private void openCustomGallery() {
-        Intent intent = new Intent(AppConstants.CustomGallery.ACTION_MULTIPLE_PICK);
-        startActivityForResult(intent, REQUEST_GALLERY);
+    @Override
+    public void onChildItemClick(int parentIndex, int childIndex) {
+
+        bindingList.getItemsList()
+                .get(parentIndex)
+                .setChecked(!bindingList.getItemsList().get(parentIndex).isChecked());
+        drawer.closeDrawer(GravityCompat.START);
+
+        performNavigationChildAction(parentIndex, childIndex);
+
     }
 
 }

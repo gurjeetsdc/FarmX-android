@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="footerColor"
+            type="Integer" />
+
+        <variable
+            name="firstActionLabel"
+            type="String"/>
+
+        <variable
+            name="secondActionLabel"
+            type="String"/>
+
+        <variable
+            name="firstActionDrawable"
+            type="String" />
+
+        <variable
+            name="secondActionDrawable"
+            type="String" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/action_first_ll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@{footerColor}"
+            android:gravity="center"
+            android:onClick="@{handler::onClick}"
+            android:padding="@dimen/dimen_16">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/action_first_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_6"
+                android:text="@{firstActionLabel}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_28"
+                app:drawableStartFromString="@{firstActionDrawable}" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/action_second_ll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@{footerColor}"
+            android:gravity="center"
+            android:onClick="@{handler::onClick}"
+            android:padding="@dimen/dimen_16">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/action_second_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_6"
+                android:text="@{secondActionLabel}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_28"
+                app:drawableStartFromString="@{secondActionDrawable}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

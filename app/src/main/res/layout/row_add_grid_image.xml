@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <variable
+            name="item"
+            type="com.sdei.farmx.dataobject.ImagePath" />
+
+        <variable
+            name="callback"
+            type="com.sdei.farmx.callback.RecyclerCallback" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_margin="@dimen/dimen_12"
+            android:layout_marginEnd="1px"
+            android:layout_marginStart="1px"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            app:loadImage="@{item.path}"
+            app:placeholder="@{R.drawable.ic_place_holder_grid}"
+            app:type="@{item.type}" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/app_name"
+            android:onClick="@{() -> callback.onItemClick(position)}"
+            app:srcCompat="@drawable/ic_cancel_black_24dp" />
+
+    </RelativeLayout>
+
+</layout>

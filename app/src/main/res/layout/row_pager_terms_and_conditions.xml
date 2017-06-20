@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="termsAndConditions"
+            type="String" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{termsAndConditions}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_24" />
+
+    </LinearLayout>
+
+</layout>

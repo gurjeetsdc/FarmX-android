@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="com.sdei.farmx.dataobject.Crop" />
+
+        <variable
+            name="filterIndex"
+            type="com.sdei.farmx.dataobject.FilterIndex" />
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.fragment.CropMyCropsFragment" />
+
+        <variable
+            name="item"
+            type="com.sdei.farmx.dataobject.RecyclerBindingList" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_66"
+                android:background="#eeeeee"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/active_rl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{handler::onClick}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/active"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_28" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_12"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/crop_green"
+                        android:visibility="@{filterIndex.filterIndex == 0 ? View.VISIBLE : View.GONE}" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_light" />
+
+                <RelativeLayout
+                    android:id="@+id/expired_rl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{handler::onClick}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/expired"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_28" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_12"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/crop_green"
+                        android:visibility="@{filterIndex.filterIndex == 1 ? View.VISIBLE : View.GONE}" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/items_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{(item.itemsList == null || item.itemsList.size() == 0) ? View.GONE : View.VISIBLE}"
+                app:layout="@{R.layout.row_my_crop}"
+                app:onItemClickListener="@{handler}"
+                app:recyclerLinearAdapter="@{item}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/dimen_10"
+                android:text="@{filterIndex.filterIndex == 0 ? @string/no_crop_added : @string/no_crop_available}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_28"
+                android:visibility="@{(item.itemsList == null || item.itemsList.size() == 0) ? View.VISIBLE : View.GONE}" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_crop_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/dimen_40"
+            android:onClick="@{handler::onClick}"
+            app:backgroundTint="@color/crop_green"
+            app:srcCompat="@drawable/ic_fab_add" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>

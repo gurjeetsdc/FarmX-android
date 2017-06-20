@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="android.view.View" />
+
+        <import type="com.sdei.farmx.helper.utils.AppConstants" />
+
+        <variable
+            name="item"
+            type="com.sdei.farmx.dataobject.FarmInput" />
+
+        <variable
+            name="callback"
+            type="com.sdei.farmx.callback.RecyclerMoreActionCallback" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_10"
+            android:visibility="@{item.type.equalsIgnoreCase(`header`) ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{item.name}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/text_black"
+                android:onClick="@{() -> callback.onItemClick(position)}"
+                android:paddingBottom="@dimen/dimen_6"
+                android:paddingEnd="@dimen/dimen_16"
+                android:paddingStart="@dimen/dimen_16"
+                android:paddingTop="@dimen/dimen_6"
+                android:text="@{String.format(@string/more, item.total)}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_24" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_300"
+            android:layout_margin="@dimen/dimen_3"
+            android:onClick="@{() -> callback.onItemClick(position)}"
+            android:orientation="vertical"
+            android:visibility="@{item.type.equalsIgnoreCase(`header`) ? View.GONE : View.VISIBLE}">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                app:loadImage="@{(item.images != null &amp;&amp; item.images.size() > 0) ? item.images.get(0) : ``}"
+                app:placeholder="@{R.drawable.ic_place_holder_grid}"
+                app:type="@{`inputs`}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/black_45_per"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_6"
+                android:paddingEnd="@dimen/dimen_10"
+                android:paddingStart="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_6">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_20"
+                    app:textCaps="@{item.name}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="@{item.category.name}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_20"
+                    app:currencyText="@{item.price}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:background="@color/cart_bg"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:onClick="@{() -> callback.itemAction(AppConstants.RECYCLER_ACTION.ADD_TO_CART, position)}"
+                    android:padding="@dimen/dimen_6"
+                    android:text="@string/add_to_cart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_20" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

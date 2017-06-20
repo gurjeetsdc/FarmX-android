@@ -11,6 +11,7 @@ import android.view.Window;
 
 import com.sdei.farmx.R;
 import com.sdei.farmx.callback.RecyclerCallback;
+import com.sdei.farmx.dataobject.RecyclerBindingList;
 import com.sdei.farmx.dataobject.SingleSelectionItem;
 import com.sdei.farmx.databinding.DialogSingleSelectionBinding;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class SingleSelectionDialog extends Dialog {
 
-    private ArrayList<SingleSelectionItem> arrayList;
+    private RecyclerBindingList<SingleSelectionItem> bindingList;
     private RecyclerCallback callback;
 
     private String title = null;
@@ -27,7 +28,8 @@ public class SingleSelectionDialog extends Dialog {
                                  ArrayList<SingleSelectionItem> arrayList,
                                  RecyclerCallback callback) {
         super(context);
-        this.arrayList = arrayList;
+        bindingList = new RecyclerBindingList<>();
+        bindingList.setItemsList(arrayList);
         this.callback = callback;
     }
 
@@ -38,7 +40,7 @@ public class SingleSelectionDialog extends Dialog {
         DialogSingleSelectionBinding binding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.dialog_single_selection, null, false);
         setContentView(binding.getRoot());
-        binding.setItems(arrayList);
+        binding.setItem(bindingList);
         binding.setHeader(title);
         binding.setItemClickListener(callback);
 

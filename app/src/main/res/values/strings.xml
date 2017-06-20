@@ -8,42 +8,36 @@
 
     <string name="my_account">My Account</string>
     <string name="crops">Crops</string>
-    <string name="farm_inputs">Farm Inputs</string>
-    <string name="farm_equipments">Farm Equipments</string>
-    <string name="lease_land">Lease Land</string>
+    <string name="farm_inputs">Inputs</string>
     <string name="services">Services</string>
     <string name="my_orders">My Orders</string>
     <string name="my_bookings">My Bookings</string>
     <string name="notifications">Notifications</string>
     <string name="settings">Settings</string>
-    <string name="contact_us">Contact us</string>
-    <string name="sign_out">Sign out</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="log_out">Log Out</string>
     <string name="my_crops">My Crops</string>
     <string name="my_bids">My Bids</string>
     <string name="search">Search</string>
-    <string name="land">Land</string>
+    <string name="lands">Lands</string>
     <string name="call_us">Call Us</string>
     <string name="equipments">Equipments</string>
 
-    <string name="buy_crop">Buy Crop</string>
-    <string name="sell_crop">Sell Crop</string>
-    <string name="buy_equipments">Buy Equipments</string>
-    <string name="sell_equipments">Sell Equipments</string>
-    <string name="rent_equipments">Rent Equipments</string>
-    <string name="buy_land">Buy Land</string>
-    <string name="sell_land">Sell Land</string>
-
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="sell_rent">Sell/Rent</string>
+    <string name="sell_lease">Sell/Lease</string>
     <string name="publish_now">PUBLISH NOW</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="signin_with_social_accounts">or signin with your social accounts</string>
-    <string name="login_facebook">Login with Facebook</string>
-    <string name="login_google">Login with Google</string>
+    <string name="signin_with_social_accounts">or login with your social accounts</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
     <string name="don_t_have_account">Don\'t have an account?</string>
     <string name="register">Register</string>
     <string name="forgot">Forgot?</string>
-    <string name="network_not_available">Your internet connection is slow. Please check your network connection and try again.</string>
+    <string name="network_not_available">Internet Connection is not available. Please check.</string>
 
     <string name="english">English</string>
     <string name="hindi">हिंदी</string>
@@ -51,7 +45,7 @@
 
     <string name="key_crops">crops</string>
     <string name="key_farm_inputs">farm_inputs</string>
-    <string name="key_farm_equipments">farm_equipments</string>
+    <string name="key_equipments">farm_equipments</string>
     <string name="key_land">land</string>
     <string name="key_services">services</string>
     <string name="key_call_us">call_us</string>
@@ -70,13 +64,13 @@
     <string name="lang_key_urdu">ur</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="email">Email</string>
-    <string name="last_name">Last Name</string>
-    <string name="first_name">First Name</string>
-    <string name="city">City/Village</string>
-    <string name="state">State</string>
+    <string name="name">Name</string>
+    <string name="city">City</string>
+    <string name="category">Category</string>
+    <string name="variety">Variety</string>
+    <string name="unit">Unit</string>
     <string name="already_have_account">Already have an account?</string>
-    <string name="login_here">Login here</string>
-    <string name="upload_image">Upload image</string>
+    <string name="upload_image">Upload Image</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="add_image">Add Image</string>
@@ -86,12 +80,274 @@
     <string name="re_try">RE-TRY</string>
     <string name="i_am_sure">I\'M SURE</string>
     <string name="done">Done</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="district">District</string>
+    <string name="crop_name">Crop Name</string>
+    <string name="quantity">Quantity</string>
+
+    <string name="grams">Grams</string>
+    <string name="kg">Kg</string>
+    <string name="quintal">Quintal</string>
+    <string name="tonnes">Tonnes</string>
+    <string name="count">Count</string>
+    <string name="dozen">Dozen</string>
+
+    <string name="price">Price</string>
+    <string name="address">Address</string>
+    <string name="available_from">Available From</string>
+    <string name="availability_period">Availability Period</string>
+    <string name="payment_preference">Payment Preference</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="supply_ability">Shipping Ability</string>
+    <string name="supply_range">Shipping Range (km)</string>
+    <string name="with_in">within State</string>
+    <string name="anywhere">Anywhere</string>
+    <string name="email_or_mobile">Email or Mobile Number</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="crop_name_with_example">Crop Name e.g. Potato</string>
+    <string name="quality">Quality</string>
+    <string name="quality_a_plus">A+</string>
+    <string name="quality_a">A</string>
+    <string name="quality_b">B</string>
+    <string name="quality_c">C</string>
+    <string name="quality_d">D</string>
+    <string name="cod">COD</string>
+    <string name="cheque">Cheque</string>
+    <string name="net_banking">Net Banking</string>
+    <string name="supply_area">Shipping Area</string>
+    <string name="add_crop">Add Crop</string>
+
+    <string name="unable_to_connect">We are unable to connect with server. This is either by slow network connection or by server end problem.</string>
+    <string name="validate_first_name">Please fill First Name.</string>
+    <string name="validate_last_name">Please fill Last Name.</string>
+    <string name="validate_email">Please fill a valid Email.</string>
+    <string name="validate_password">Please fill Password.</string>
+    <string name="validate_password_via_length">Password should be minimum 8 characters.</string>
+    <string name="validate_confirm_password">Please fill Confirm Password.</string>
+    <string name="message_password_not_matched">Your password and confirmation password do not match.</string>
+    <string name="validate_phone_number">Please fill Mobile Number.</string>
+    <string name="please_wait">Please wait &#8230;</string>
+    <string name="please_select_state">Please select a State.</string>
+    <string name="one_time_password">One Time Password</string>
+    <string name="enter_the_otp">Fill the OTP</string>
+    <string name="submit">Submit</string>
+    <string name="validate_login_username">Please fill valid Email.</string>
+    <string name="login_successful">Login Successful.</string>
+    <string name="enter_valid_otp">Please fill valid otp.</string>
+    <string name="email_already_exist">Given email already exists.</string>
+    <string name="validate_wrong_password">Email and Password does not match.</string>
+    <string name="validate_wrong_login_username">Email does not exist.</string>
+    <string name="ok">Ok</string>
+    <string name="please_select_category">Please select Category</string>
+    <string name="description">Description</string>
+    <string name="st_msg">Password Is Wrong.</string>
+    <string name="error_enter_crop_name">Please fill Crop Name.</string>
+    <string name="error_select_category">Select Category.</string>
+    <string name="error_select_variety">Select Variety</string>
+    <string name="error_enter_quantity">Please fill Quantity Value.</string>
+    <string name="error_enter_price">Please fill Price.</string>
+    <string name="error_enter_address">Please fill Address.</string>
+    <string name="error_enter_city">Please fill City.</string>
+    <string name="error_select_state">Select State</string>
+    <string name="error_select_district">Select District</string>
+    <string name="error_enter_pincode">Please fill Pincode.</string>
+    <string name="error_select_date">Select Date</string>
+    <string name="error_enter_time_period">Please fill Availability Period.</string>
+    <string name="error_select_supply_area">Select Shipping Area</string>
+    <string name="error_enter_distance">Please fill Shipping Range.</string>
+    <string name="session_expire_message">Logged in session expired. Please login again.</string>
+    <string name="validate_empty_email">Please fill Email.</string>
+    <string name="registered_successfully">Successfully Registered.</string>
+    <string name="key_my_account">my_account</string>
+    <string name="key_my_orders">my_orders</string>
+    <string name="key_my_bookings">my_bookings</string>
+    <string name="key_notifications">notifications</string>
+    <string name="key_settings">settings</string>
+    <string name="key_contact_us">contact_us</string>
+    <string name="key_log_out">log_out</string>
+    <string name="key_my_crops">my_crops</string>
+    <string name="key_my_bids">my_bids</string>
+    <string name="key_loging">login</string>
+    <string name="km">Km</string>
+    <string name="crop_added_successfully">Crop is  added successfully.</string>
+    <string name="equipment_added_successfully">Equipment is  added successfully.</string>
+    <string name="city_village">City/Village</string>
+    <string name="offer_price">Offer Price</string>
+    <string name="active">Active</string>
+    <string name="expired">Expired</string>
+    <string name="no_crop_available">No Crop to display.</string>
+    <string name="no_input_available">No Input to display.</string>
+    <string name="no_equipment_available">No Equipment to display.</string>
+    <string name="sort_by">Sort by</string>
+    <string name="filter">Filter</string>
+    <string name="rupee_symbol">₹</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="more_crops">More Crops</string>
+    <string name="more">%s MORE</string>
+    <string name="enter_valid_first_name">Please enter valid First Name</string>
+    <string name="enter_valid_last_name">Please enter valid Last Name</string>
+    <string name="message_logout">Are you sure you want to logout?</string>
+    <string name="enter_valid_crop_name">Please enter valid Crop Name.</string>
+    <string name="advertisement_1">Get best values for your crops.</string>
+    <string name="advertisement_2">Earn more by selling\nyour crops, renting equipments.</string>
+    <string name="advertisement_3">Get amazing deals and\ndiscounts on different items.</string>
+    <string name="register_html"><![CDATA[<u>Register</u>]]></string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="alert_delete_crop">Are you sure you want to delete this crop?</string>
+    <string name="alert_delete_equipment">Are you sure you want to delete this equipment?</string>
+    <string name="message_crop_not_available">Crop not available.</string>
+    <string name="equipment_not_available">Equipment not available.</string>
+    <string name="message_crop_delete_successfully">Crop has been deleted successfully.</string>
+    <string name="equipment_delete_successfully">Equipment has been deleted successfully.</string>
+    <string name="crop_updated_successfully">Crop is  updated successfully.</string>
+    <string name="equipment_updated_successfully">Equipment is  updated successfully.</string>
+    <string name="key_buy_input">buy_input</string>
+    <string name="buy_input">Buy Input</string>
+    <string name="key_sell_input">sell_input</string>
+    <string name="sell_input">Sell Input</string>
+    <string name="bid_now">Bid Now</string>
+    <string name="product_description">Product Description</string>
+    <string name="add_to_wishlist">Add to Wishlist</string>
+    <string name="ask_a_question">Ask a Question</string>
+    <string name="you_can_select_maximum_images">You can select maximum 5 images.</string>
+    <string name="total_bids">Total Bids</string>
+    <string name="zero">0</string>
+    <string name="ends_on">Ends On</string>
+    <string name="highest_bid">Highest Bid</string>
+    <string name="my_bid">My Bid</string>
+    <string name="fill_bid_amount">Please fill Bid Amount.</string>
+    <string name="alert_login_to_continue">Please login to continue.</string>
+    <string name="congrats">Congratulations!</string>
+
+    <string name="bids">Bids</string>
+    <string name="update_bid">Update Bid</string>
+    <string name="no_bids_available">You did not bid any crop.</string>
+    <string name="more_inputs">More Inputs</string>
+
+    <string name="bid_placed_successfully">Your bid placed successfully.</string>
+    <string name="bid_updated_successfully">Your bid updated successfully.</string>
+    <string name="error_valid_pincode">Please fill valid Pincode.</string>
+    <string name="valid_phone_number">Please fill valid Mobile Number.</string>
+    <string name="no_image">No image</string>
+    <string name="no_crop_added">You have not added any crop yet.</string>
+    <string name="no_equipment_added">You have not added any equipment yet.</string>
+    <string name="inputs">Inputs</string>
+    <string name="login_here"><![CDATA[<u>Login here</u>]]></string>
+    <string name="warning">Warning</string>
+    <string name="uploading_image">Uploading image, please wait&#8230;</string>
+    <string name="verified">Verified</string>
+    <string name="bid">Bid</string>
+    <string name="verification">Varification</string>
+    <string name="shipping">Shipping Detail</string>
+    <string name="no_bid_for_crop">Currently there is no bid for this crop.</string>
+    <string name="view_bid">View Bid</string>
+    <string name="accept_bid">Accept Bid</string>
+    <string name="comment_and_feedback">Comments and Feedback</string>
+    <string name="communication">Communication</string>
+    <string name="deal_made_with">Deal made with</string>
+    <string name="deal_price">Deal Price</string>
+    <string name="current_bid_status">Current Status: Waiting for Payment</string>
+    <string name="alert_already_has_accepted_bid">You have already accepted bid of {{user}}.</string>
+    <string name="you_won_bid">You have won the bid.\nPlease pay 10% of the payment.</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="total">Total</string>
+    <string name="item_price">Item Price</string>
+    <string name="book_now">Book Now</string>
+    <string name="more_equipments">More Equipments</string>
+    <string name="add_equipment">Add Equipment</string>
+    <string name="key_seller_profile">seller_profile</string>
+    <string name="seller_profile">Seller Profile</string>
+    <string name="available">Available</string>
+    <string name="enter_more_quantity">You have entered more value than available quantity. Please enter valid quantity value.</string>
+    <string name="equipment_name">Equipment Name</string>
+    <string name="type">Type</string>
+    <string name="rent">Rent</string>
+    <string name="company_manufacturer">Company/Manufacturer</string>
+    <string name="model_year">Model Year</string>
+    <string name="model">Model</string>
+    <string name="error_enter_equipment_name">Please fill Equipment Name.</string>
+    <string name="error_select_manufacturer">Select Company/Manufacturer</string>
+    <string name="terms_and_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="my_equipments">My Equipments</string>
+    <string name="key_input_address_detail">input_address_detail</string>
+    <string name="input_detail">Input Details</string>
+    <string name="item_added_to_cart">Item added to the cart successfully.</string>
+
+    <string-array name="crop_detail_tabs">
+        <item>@string/shipping</item>
+        <item>@string/terms_and_conditions</item>
+    </string-array>
+
+    <string-array name="crop_detail_key_tabs">
+        <item>@string/key_shipping</item>
+        <item>@string/key_terms_and_conditions</item>
+    </string-array>
+
+    <string-array name="crop_bid_user_detail_tabs">
+        <item>@string/comment_and_feedback</item>
+        <item>@string/communication</item>
+    </string-array>
+
+    <string-array name="crop_bid_user_detail_key_tabs">
+        <item>comment_and_feedback</item>
+        <item>communication</item>
+    </string-array>
+
+    <string-array name="input_weight_units">
+        <item>@string/grams</item>
+        <item>@string/kg</item>
+        <item>@string/quintal</item>
+        <item>@string/tonnes</item>
+    </string-array>
+
+    <string-array name="weight_units">
+        <item>@string/kg</item>
+        <item>@string/quintal</item>
+        <item>@string/tonnes</item>
+        <item>@string/count</item>
+        <item>@string/dozen</item>
+    </string-array>
+
+    <string-array name="advertisement_messages">
+        <item>@string/advertisement_1</item>
+        <item>@string/advertisement_2</item>
+        <item>@string/advertisement_3</item>
+    </string-array>
+
+    <string-array name="time_period_array">
+        <item>@string/days</item>
+        <item>@string/month</item>
+        <item>@string/year</item>
+    </string-array>
+
+    <string-array name="equipment_availability_period_units">
+        <item>@string/hours</item>
+        <item>@string/days</item>
+        <item>@string/week</item>
+        <item>@string/month</item>
+    </string-array>
+
+    <string-array name="distance_units_array">
+        <item>Km</item>
+        <item>Miles</item>
+    </string-array>
+
+    <string-array name="supply_areas_array">
+        <item>Within State</item>
+        <item>Anywhere</item>
+    </string-array>
 
     <string-array name="home_tab_items">
         <item>@string/crops</item>
         <item>@string/farm_inputs</item>
-        <item>@string/farm_equipments</item>
-        <item>@string/land</item>
+        <item>@string/equipments</item>
+        <item>@string/lands</item>
         <item>@string/services</item>
         <item>@string/call_us</item>
     </string-array>
@@ -99,7 +355,7 @@
     <string-array name="home_tab_items_key">
         <item>@string/key_crops</item>
         <item>@string/key_farm_inputs</item>
-        <item>@string/key_farm_equipments</item>
+        <item>@string/key_equipments</item>
         <item>@string/key_land</item>
         <item>@string/key_services</item>
         <item>@string/key_call_us</item>

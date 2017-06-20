@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="com.sdei.farmx.helper.utils.AppConstants" />
+
+        <variable
+            name="item"
+            type="com.sdei.farmx.dataobject.CropBid" />
+
+        <variable
+            name="callback"
+            type="com.sdei.farmx.callback.RecyclerCallback" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> callback.onItemClick(position)}"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
+
+            <com.sdei.farmx.customview.CircleImageView
+                android:layout_width="@dimen/dimen_104"
+                android:layout_height="@dimen/dimen_104"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:contentDescription="@string/app_name"
+                app:loadImage="@{(item.cropObj.images != null &amp;&amp; item.cropObj.images.size() > 0) ? item.cropObj.images.get(0) : ``}"
+                app:placeholder="@{R.drawable.ic_place_holder_circular}"
+                app:type="@{`crops`}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="1"
+                android:text="@{item.cropObj.name}"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_30" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dimen_20"
+                android:paddingStart="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_22"
+                    app:currencyTextWithPrefix="@{item.cropObj.price}"
+                    app:prefix="@{@string/offer_price+`: `}"
+                    app:suffix="@{``}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_22"
+                    app:currencyTextWithPrefix="@{item.amount}"
+                    app:prefix="@{@string/my_bid+`: `}"
+                    app:suffix="@{``}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_22"
+                    app:prefix="@{@string/ends_on+`: `}"
+                    app:requiredDateFormat="@{AppConstants.DATE_FORMAT.FORMAT_2}"
+                    app:showDefaultValue="@{true}"
+                    app:textDate="@{item.cropObj.endDate}" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee" />
+
+    </LinearLayout>
+</layout>

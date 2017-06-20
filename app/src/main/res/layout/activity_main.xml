@@ -4,11 +4,20 @@
 
     <data>
 
+        <import type="com.sdei.farmx.R"/>
         <import type="android.view.View" />
 
         <variable
             name="header"
             type="com.sdei.farmx.dataobject.AppHeaderObject" />
+
+        <variable
+            name="item"
+            type="com.sdei.farmx.dataobject.RecyclerBindingList"/>
+
+        <variable
+            name="callback"
+            type="com.sdei.farmx.callback.RecyclerCallback"/>
 
     </data>
 
@@ -21,15 +30,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:fitsSystemWindows="true">
+            android:background="@color/white">
 
             <RelativeLayout
                 android:id="@+id/header_parent_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:background_drawable="@{header.backgroundDrawable}"
-                app:background_color="@{header.backgroundColor}">
+                app:background_color="@{header.backgroundColor}"
+                app:background_drawable="@{header.backgroundDrawable}">
 
                 <RelativeLayout
                     android:id="@+id/header_rl"
@@ -54,8 +62,8 @@
                             android:id="@+id/nav_menu_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ic_hamburg"
-                            android:contentDescription="@string/app_name" />
+                            android:contentDescription="@string/app_name"
+                            app:srcCompat="@drawable/ic_hamburg" />
 
                     </LinearLayout>
 
@@ -68,6 +76,39 @@
                         android:background="@drawable/ic_header_logo"
                         android:contentDescription="@string/app_name"
                         android:visibility="@{header.hasCenteredImage ? View.VISIBLE : View.GONE}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@={header.title}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_28"
+                        android:textStyle="bold"
+                        android:visibility="@{header.hasCenteredImage ? View.GONE : View.VISIBLE}" />
+
+                    <LinearLayout
+                        android:id="@+id/home_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="onClick"
+                        android:paddingBottom="@dimen/dimen_6"
+                        android:paddingEnd="@dimen/dimen_30"
+                        android:paddingStart="@dimen/dimen_30"
+                        android:paddingTop="@dimen/dimen_6">
+
+                        <ImageView
+                            android:id="@+id/home_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dimen_10"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="@{header.hasCenteredImage ? View.GONE : View.VISIBLE}"
+                            app:srcCompat="@drawable/ic_home" />
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
@@ -87,7 +128,9 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="horizontal"
-                        android:padding="@dimen/dimen_4">
+                        android:padding="@dimen/dimen_4"
+                        android:focusableInTouchMode="true"
+                        android:focusable="true">
 
                         <EditText
                             android:layout_width="match_parent"
@@ -123,7 +166,26 @@
                 android:id="@+id/main_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/header_parent_rl" />
+                android:layout_below="@+id/header_parent_rl"
+                android:layout_above="@+id/marquee_tv"/>
+
+            <TextView
+                android:id="@+id/marquee_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:background_color="@{header.backgroundColor}"
+                app:background_drawable="@{header.backgroundDrawable}"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:padding="@dimen/dimen_10"
+                android:scrollHorizontally="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:text="Brinjal - Big(10 Quintal): ₹1356, Potato - Hilly(5 Quintal): ₹5000,  Brinjal - Small(3 Quintal): ₹800"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_26"
+                app:viewSelected="@{true}"
+                android:visibility="@{header.showMarquee ? View.VISIBLE : View.GONE}"/>
 
         </RelativeLayout>
 
@@ -144,13 +206,15 @@
                     android:id="@+id/nav_items_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"
+                    app:recyclerLinearAdapter="@{item}"
+                    app:layout="@{R.layout.row_nav_item}"
+                    app:onItemClickListener="@{callback}"/>
 
             </LinearLayout>
 
         </android.support.design.widget.NavigationView>
 
     </android.support.v4.widget.DrawerLayout>
-
 
 </layout>

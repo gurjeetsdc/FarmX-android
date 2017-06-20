@@ -3,16 +3,45 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="colorPrimary">@android:color/transparent</item>
-
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
+        <!--<item name="colorPrimary">@android:color/transparent</item>-->
+        <item name="windowActionBarOverlay">false</item>
 
     </style>
 
     <style name="AppDefaultBackground" parent="AppTheme">
         <item name="android:windowBackground">@drawable/ic_splash_background</item>
+    </style>
+
+    <style name="gray_edittext_theme">
+        <item name="android:textColorHint">@color/text_black</item>
+        <item name="hintTextAppearance">@style/gray_edittext_float_text</item>
+    </style>
+
+    <style name="white_edittext_theme">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="hintTextAppearance">@style/white_edittext_float_text</item>
+    </style>
+
+    <style name="white_edittext_float_text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/dimen_28</item>
+    </style>
+
+    <style name="gray_edittext_float_text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/dimen_24</item>
+    </style>
+
+    <style name="gray_spinner_theme" parent="Widget.AppCompat.Spinner.Underlined">
+        <item name="colorControlNormal">@color/text_black</item>
+        <item name="colorControlActivated">@color/text_black</item>
+        <item name="colorControlHighlight">@color/text_black</item>
+    </style>
+
+    <style name="white_spinner_theme" parent="Widget.AppCompat.Spinner.Underlined">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
     </style>
 
 </resources>

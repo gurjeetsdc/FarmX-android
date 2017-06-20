@@ -3,20 +3,30 @@ package com.sdei.farmx.activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.sdei.farmx.R;
+import com.sdei.farmx.apimanager.ApiManager;
+import com.sdei.farmx.apimanager.ApiResponse;
+import com.sdei.farmx.callback.ApiServiceCallback;
 import com.sdei.farmx.callback.RecyclerCallback;
+import com.sdei.farmx.databinding.ActivitySplashBinding;
 import com.sdei.farmx.dataobject.SingleSelectionItem;
 import com.sdei.farmx.dialog.SingleSelectionDialog;
 import com.sdei.farmx.helper.preferences.MyPreference;
 import com.sdei.farmx.helper.preferences.PreferenceConstant;
+import com.sdei.farmx.helper.utils.AppConstants;
 import com.sdei.farmx.helper.utils.AppLogger;
 import com.sdei.farmx.helper.utils.AppUtils;
+
+import io.fabric.sdk.android.Fabric;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -25,49 +35,57 @@ import java.util.ArrayList;
  * This is the loading screen for the app. This screen will open up for 3 seconds
  * and after that user will redirect to Home screen of the app.
  */
-public class SplashActivity extends AppActivity {
+public class SplashActivity extends AppActivity implements ApiServiceCallback {
 
     private SingleSelectionDialog langDialog = null;
-
-    private Handler handler;
-    private Runnable runnable;
+    private boolean selectLang = false;
 
     /**
      * Called when the activity is first created.
      * This is where we do all of our normal static set up: create views,
      * bind data to lists, etc.
+     *
      * @param savedInstanceState containing the activity's previously frozen state, if there was one.
      */
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        //printKeyHash();
-        startTimer();
-    }
+        Fabric.with(this, new Crashlytics());
+        ActivitySplashBinding binding
+                = DataBindingUtil.setContentView(SplashActivity.this, R.layout.activity_splash);
+        selectLang = TextUtils.isEmpty(getAppLanguage(SplashActivity.this));
+        binding.setButtonVisibility(getAppLanguage(SplashActivity.this));
+        printKeyHash();
+        AppUtils.setStatusBarTint(this, R.color.amber);
 
-    /**
-     * delay timer for Splash screen. Screen will open for 3 seconds and after that
-     * user will redirect to Home screen.
-     */
-    private void startTimer() {
+        if(!selectLang) {
 
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                openActivity(SplashActivity.this, MainActivity.class);
-                finish();
-            }
-        };
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    openActivity(SplashActivity.this, MainActivity.class);
+                    finishActivity(SplashActivity.this);
+                }
+            }, 2000);
 
-        handler.postDelayed(runnable, 3000);
+        }
+//        else if(isNetworkAvailable(SplashActivity.this, true, 101)){
+//
+//            ApiManager.callService(
+//                    SplashActivity.this,
+//                    AppConstants.API_INDEX.LANGUAGE,
+//                    SplashActivity.this,
+//                    false,
+//                    null);
+//
+//        }
 
     }
 
     /**
      * Handle click listeners for the screen.
+     *
      * @param view clicked on and perform action accordingly by using view id.
      */
     public void onClick(View view) {
@@ -75,11 +93,6 @@ public class SplashActivity extends AppActivity {
         switch (view.getId()) {
 
             case R.id.select_lang_btn:
-
-                if (handler != null
-                        && runnable != null) {
-                    handler.removeCallbacks(runnable);
-                }
 
                 openLanguagesDialog();
 
@@ -118,9 +131,8 @@ public class SplashActivity extends AppActivity {
                         langDialog.dismiss();
                         langDialog = null;
 
-                        finish();
-                        overridePendingTransition(0, 0);
-                        startActivity(getIntent());
+                        openActivity(SplashActivity.this, MainActivity.class);
+                        finishActivity(SplashActivity.this);
 
                     }
 
@@ -157,6 +169,23 @@ public class SplashActivity extends AppActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void onSuccess(int apiIndex, ApiResponse response) {
+
+//        AppLogger.log("SplashActivity", response.getData().toString());
+
+    }
+
+    @Override
+    public void onException(int apiIndex, Throwable t) {
+
+    }
+
+    @Override
+    public void onError(int apiIndex, String message) {
 
     }
 

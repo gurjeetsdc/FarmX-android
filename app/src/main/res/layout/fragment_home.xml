@@ -32,26 +32,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabIndicatorHeight="0px"
-                app:tabMode="scrollable"
+                app:tabMode="fixed"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
                 app:tabPaddingEnd="0px"
                 app:tabPaddingStart="0px" />
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/amber_slider"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:padding="@dimen/dimen_10"
-            android:scrollHorizontally="true"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:text="Brinjal - Big(10 Quintal): 1356.00  Brinjal - Big(10 Quintal): 1356.00  Brinjal - Big(10 Quintal): 1356.00"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimen_26"
-            app:viewSelected="@{true}" />
 
     </RelativeLayout>
 

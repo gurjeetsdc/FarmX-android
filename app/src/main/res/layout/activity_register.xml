@@ -4,25 +4,38 @@
 
     <data>
 
+        <import type="com.sdei.farmx.R" />
+
         <variable
             name="user"
             type="com.sdei.farmx.dataobject.User" />
 
+        <variable
+            name="states"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="districts"
+            type="java.util.ArrayList&lt;String&gt;" />
+
     </data>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollY="@dimen/dimen_1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/dimen_40"
                 android:paddingEnd="@dimen/dimen_40"
@@ -32,170 +45,287 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_80"
+                    android:layout_marginTop="@dimen/dimen_100"
                     android:background="@drawable/ic_login_logo"
                     android:contentDescription="@string/app_name" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/fname_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/fname_et"
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/first_name_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/dimen_20"
-                        android:drawableStart="@drawable/ic_login_user_name"
                         android:hint="@string/first_name"
-                        android:inputType="text"
+                        android:inputType="textVisiblePassword|textCapSentences|textNoSuggestions"
+                        android:maxLength="20"
                         android:maxLines="1"
-
                         android:text="@={user.firstName}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_user_name}" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/lname_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/lname_et"
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/last_name_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_login_user_name"
+                        android:drawablePadding="@dimen/dimen_20"
                         android:hint="@string/last_name"
-                        android:inputType="text"
+                        android:inputType="textVisiblePassword|textCapSentences|textNoSuggestions"
+                        android:maxLength="20"
                         android:maxLines="1"
+                        android:nextFocusDown="@+id/email_et"
                         android:text="@={user.lastName}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_user_name}" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/email_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/email_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_login_user_name"
+                        android:drawablePadding="@dimen/dimen_20"
                         android:hint="@string/email"
-                        android:inputType="textEmailAddress"
-                        android:text="@={user.email}"
+                        android:inputType="textEmailAddress|textNoSuggestions"
+                        android:maxLength="60"
+                        android:maxLines="1"
+                        android:text="@={user.username}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/mobile_number_til"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
-
-                    <EditText
-                        android:id="@+id/mobile_number_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_phone"
-                        android:hint="@string/mobile_number"
-                        android:inputType="number"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28"
-                        app:text="@{user.phone}" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_email}" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/password_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/password_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_login_password"
+                        android:drawablePadding="@dimen/dimen_20"
                         android:hint="@string/password"
                         android:inputType="textPassword"
+                        android:maxLength="30"
                         android:text="@={user.password}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_login_password}" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/state_til"
+                    android:id="@+id/confirm_password_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/state_et"
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/confirm_password_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_location"
-                        android:hint="@string/state"
-                        android:inputType="text"
-                        android:text="@={user.state}"
+                        android:drawablePadding="@dimen/dimen_20"
+                        android:hint="@string/confirm_password"
+                        android:inputType="textPassword"
+                        android:maxLength="30"
+                        android:text="@={user.confirmPassword}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_login_password}" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/distt_til"
+                    android:id="@+id/mobile_number_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/distt_et"
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/mobile_number_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_location"
-                        android:hint="@string/password"
-                        android:inputType="text"
-                        android:text="@={user.district}"
+                        android:drawablePadding="@dimen/dimen_20"
+                        android:hint="@string/mobile_number"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:text="@={user.mobile}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_phone}" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/city_til"
+                    android:id="@+id/address_til"
+                    style="@style/white_edittext_theme"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/white">
+                    android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/address_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:completionThreshold="3"
+                        android:drawablePadding="@dimen/dimen_20"
+                        android:hint="@string/address"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLength="70"
+                        android:text="@={user.address}"
+                        android:textColor="@color/white"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_address}" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/city_auto_complete_til"
+                    style="@style/white_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/city_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableStart="@drawable/ic_reg_city"
-                        android:hint="@string/city"
-                        android:inputType="text"
+                        android:completionThreshold="3"
+                        android:drawablePadding="@dimen/dimen_20"
+                        android:hint="@string/city_village"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLength="50"
                         android:text="@={user.city}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_28" />
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_city}" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/state_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_34"
+                        android:layout_height="@dimen/dimen_34"
+                        android:layout_marginBottom="@dimen/dimen_6"
+                        android:contentDescription="@string/app_name"
+                        app:srcCompat="@drawable/ic_state" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/state_spinner"
+                        style="@style/white_spinner_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        app:backgroundTint="@color/white"
+                        app:hint="@{@string/state}"
+                        app:hintTextColor="@{R.color.white}"
+                        app:layoutIndex="@{1}"
+                        app:selectedItem="@{``}"
+                        app:spinnerAdapter="@{states}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/districts_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:gravity="center_horizontal|bottom">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_30"
+                            android:layout_height="@dimen/dimen_30"
+                            android:contentDescription="@string/app_name"
+                            app:srcCompat="@drawable/ic_district" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/district_spinner"
+                        style="@style/white_spinner_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/white"
+                        app:hint="@{@string/district}"
+                        app:hintTextColor="@{R.color.white}"
+                        app:layoutIndex="@{1}"
+                        app:selectedItem="@{``}"
+                        app:spinnerAdapter="@{districts}" />
+
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/pin_auto_complete_til"
+                    style="@style/white_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/pin_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:completionThreshold="3"
+                        android:drawablePadding="@dimen/dimen_20"
+                        android:hint="@string/pin_code"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:text="@={user.pincode}"
+                        android:textColor="@color/white"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_30"
+                        app:backgroundTint="@color/white"
+                        app:drawableStart="@{R.drawable.ic_pincode}" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -228,7 +358,7 @@
                         android:gravity="center"
                         android:text="@string/already_have_account"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_30" />
+                        android:textSize="@dimen/dimen_32" />
 
                     <TextView
                         android:id="@+id/login_tv"
@@ -238,10 +368,10 @@
                         android:onClick="onClick"
                         android:paddingEnd="@dimen/dimen_10"
                         android:paddingStart="@dimen/dimen_10"
-                        android:text="@string/login_here"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_30"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/dimen_32"
+                        android:textStyle="bold"
+                        app:htmlText="@{@string/login_here}" />
 
                 </LinearLayout>
 
@@ -249,23 +379,30 @@
 
         </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/back_ll"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen_20">
+            android:layout_alignParentTop="true"
+            app:backgroundParallaxColor="@{R.id.scroll_view}">
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/back_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/app_name"
-                app:srcCompat="@drawable/ic_arrow_back_black_svg" />
+                android:background="@color/transparent"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20">
 
-        </LinearLayout>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    app:srcCompat="@drawable/ic_arrow_back_black_svg" />
 
-    </RelativeLayout>
+            </LinearLayout>
 
+        </RelativeLayout>
 
+    </FrameLayout>
 </layout>

@@ -2,6 +2,7 @@
 
     <dimen name="dimen_1">2px</dimen>
     <dimen name="dimen_2">4px</dimen>
+    <dimen name="dimen_3">6px</dimen>
     <dimen name="dimen_4">8px</dimen>
     <dimen name="dimen_6">12px</dimen>
     <dimen name="dimen_8">16px</dimen>
@@ -83,6 +84,10 @@
     <dimen name="dimen_195">390px</dimen>
     <dimen name="dimen_200">400px</dimen>
     <dimen name="dimen_250">500px</dimen>
+    <dimen name="dimen_300">600px</dimen>
+    <dimen name="dimen_315">630px</dimen>
+    <dimen name="dimen_350">700px</dimen>
     <dimen name="dimen_400">800px</dimen>
+    <dimen name="dimen_590">1180px</dimen>
 
 </resources>

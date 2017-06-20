@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sdei.farmx.dataobject.Crop" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{@string/supply_ability+`:`}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:gravity="end"
+                android:text="@{data.supplyAbility}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="@{data.supplyAbility.equals(`No`) ? View.GONE : View.VISIBLE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{@string/supply_area+`:`}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:gravity="end"
+                android:text="@{data.supplyArea}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="@{data.supplyAbility.equals(`No`) ? View.GONE : View.VISIBLE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{@string/supply_range+`:`}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:gravity="end"
+                android:text="@{data.supplyRange}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_24" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

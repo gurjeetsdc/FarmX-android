@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="statement"
+            name="data"
             type="String" />
 
     </data>
@@ -21,9 +21,9 @@
             android:gravity="center"
             android:lines="2"
             android:padding="@dimen/dimen_20"
-            android:text="@={statement}"
+            android:text="@={data}"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_46" />
+            android:textSize="@dimen/dimen_34" />
 
     </LinearLayout>
 

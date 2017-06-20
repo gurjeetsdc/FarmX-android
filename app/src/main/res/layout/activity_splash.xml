@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+<layout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/ic_splash_logo"
-        android:contentDescription="@string/app_name" />
+    <data>
 
-    <Button
-        android:id="@+id/select_lang_btn"
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="buttonVisibility"
+            type="String" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/green"
-        android:onClick="onClick"
-        android:text="@string/select_language"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dimen_36"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="@dimen/dimen_590"
+            android:layout_height="@dimen/dimen_315"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_splash_logo"
+            android:contentDescription="@string/app_name" />
+
+        <Button
+            android:id="@+id/select_lang_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/green"
+            android:onClick="onClick"
+            android:text="@string/select_language"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_36"
+            android:textStyle="bold"
+            android:visibility="@{TextUtils.isEmpty(buttonVisibility) ? View.VISIBLE : View.GONE}" />
+
+    </RelativeLayout>
+
+</layout>

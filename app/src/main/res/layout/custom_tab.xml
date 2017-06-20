@@ -14,17 +14,18 @@
 
     </data>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/item_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:maxLines="1"
-        android:onClick="@{(v) -> clickHandler.onTabClicked(v, item)}"
+        android:onClick="@{(v) -> clickHandler.onTabClicked(item)}"
         android:text="@={item.name}"
         android:textColor="@color/white"
         android:textSize="@dimen/dimen_18"
-        app:icon="@{item.icon}" />
+        android:paddingTop="@dimen/dimen_8"
+        app:drawableTop="@{item.icon}" />
 
 </layout>
 

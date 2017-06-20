@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="com.sdei.farmx.helper.utils.AppConstants" />
+
+        <import type="com.sdei.farmx.dataobject.TabItem" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sdei.farmx.dataobject.Crop" />
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.fragment.CropDetailFragment" />
+
+        <variable
+            name="tabs"
+            type="java.util.ArrayList&lt;TabItem&gt;" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_350">
+
+                <com.sdei.farmx.customview.CustomPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:autoScroll="@{false}"
+                    app:handleVisibility="@{true}"
+                    app:pagerAdapter="@{data.images}"
+                    app:resource="@{R.layout.row_image_pager}"
+                    app:type="@{`crops`}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#f0f0f0"
+                    android:gravity="center"
+                    android:text="@string/no_image"
+                    android:visibility="@{(data.images == null || data.images.size() == 0) ? View.VISIBLE : View.GONE}" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_20"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/dimen_20"
+                    app:attachToPager="@{pager}"
+                    app:tabBackground="@drawable/pager_gray_tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabPaddingEnd="@dimen/dimen_16"
+                    app:tabPaddingStart="@dimen/dimen_16"
+                    app:visibilityBasedOnArrayList="@{data.images}" />
+
+                <LinearLayout
+                    android:id="@+id/left_arrow_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{handler::onClick}"
+                    android:padding="@dimen/dimen_10">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:rotation="180"
+                        android:tint="@color/gray_dark"
+                        app:srcCompat="@drawable/ic_nav_arrow"
+                        app:visibilityBasedOnArrayList="@{data.images}" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/right_arrow_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{handler::onClick}"
+                    android:padding="@dimen/dimen_10">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/gray_dark"
+                        app:srcCompat="@drawable/ic_nav_arrow"
+                        app:visibilityBasedOnArrayList="@{data.images}" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:text="@{data.name}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_28" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{data.categoryObj.name}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{data.variety}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:visibility="@{data.variety}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_30"
+                        android:text="@{data.quantity+` `+data.quantityUnit}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_30"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/quality+`: `}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            android:textStyle="bold"
+                            app:visibility="@{data.grade}" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{data.grade}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            app:visibility="@{data.grade}" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_14"
+                app:userVisibility="@{data.user.id}"
+                app:visibilityType="@{View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/shape_rectangle_rounded"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_8"
+                    android:paddingEnd="@dimen/dimen_20"
+                    android:paddingStart="@dimen/dimen_20"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:text="@string/add_to_wishlist"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_20"
+                    app:drawableStart="@{R.drawable.ic_wish_list}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/shape_rectangle_rounded"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_8"
+                    android:paddingEnd="@dimen/dimen_20"
+                    android:paddingStart="@dimen/dimen_20"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:text="@string/ask_a_question"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/dimen_20"
+                    app:drawableStart="@{R.drawable.ic_ask_question}"
+                    tools:ignore="RelativeOverlap" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:drawablePadding="@dimen/dimen_10"
+                android:gravity="center"
+                android:padding="@dimen/dimen_6"
+                android:text="@string/verified"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_24"
+                android:visibility="@{data.verified.equals(`No`) ? View.GONE : View.VISIBLE}"
+                app:drawableEnd="@{R.drawable.ic_verification}" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_shape_with_corner"
+                    android:orientation="vertical"
+                    android:visibility="@{(data.hasBid || handler.isAccepted(data)) ? View.GONE : View.VISIBLE}"
+                    app:colorFilter="@{@color/detail_grey}">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/bid"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_26" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/total_bids+`: `}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_20" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(data.bids.size())}"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/dimen_20" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:background="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_10"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".24"
+                            android:maxLines="1"
+                            android:text="@{@string/offer_price + `:`}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".36"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_20"
+                            android:textStyle="bold"
+                            app:currencyText="@{data.price}" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".4"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/date_tv"
+                                android:maxLines="1"
+                                android:text="@{@string/payment_preference + `:`}"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/dimen_24" />
+
+                            <TextView
+                                android:id="@+id/date_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dimen_6"
+                                android:text="@{data.paymentPreference}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_20"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_10"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="@{(data.availableFromObj == null || data.availableFromObj.formatted == null) ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".24"
+                            android:maxLines="1"
+                            android:text="@{@string/available_from + `:`}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <TextView
+                            android:id="@+id/available_from_date_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".36"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_20"
+                            android:textStyle="bold"
+                            app:prefix="@{``}"
+                            app:requiredDateFormat="@{AppConstants.DATE_FORMAT.FORMAT_2}"
+                            app:showDefaultValue="@{true}"
+                            app:textDate="@{data.availableFromObj.formatted}" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".4"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/available_date_tv"
+                                android:maxLines="1"
+                                android:text="@{@string/ends_on + `:`}"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/dimen_24" />
+
+                            <TextView
+                                android:id="@+id/available_date_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dimen_6"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_20"
+                                android:textStyle="bold"
+                                app:prefix="@{``}"
+                                app:requiredDateFormat="@{AppConstants.DATE_FORMAT.FORMAT_2}"
+                                app:showDefaultValue="@{true}"
+                                app:textDate="@{data.endDate}" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_10"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".24"
+                            android:maxLines="1"
+                            android:text="@{@string/highest_bid + `:`}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".36"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_20"
+                            android:textStyle="bold"
+                            app:currencyText="@{data.highestBid}" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".4"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/input_bid_ll"
+                                android:maxLines="1"
+                                android:text="@{@string/my_bid + `:`}"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/dimen_24"
+                                app:userVisibility="@{data.user.id}"
+                                app:visibilityType="@{View.GONE}" />
+
+                            <LinearLayout
+                                android:id="@+id/input_bid_ll"
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dimen_6"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:userVisibility="@{data.user.id}"
+                                app:visibilityType="@{View.GONE}">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/dimen_6"
+                                    android:text="@string/rupee_symbol"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_20"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/dimen_2"
+                                    android:background="@color/white"
+                                    android:hint="@string/zero"
+                                    android:inputType="numberDecimal"
+                                    android:maxLength="10"
+                                    android:padding="@dimen/dimen_10"
+                                    android:text="@={data.myBidPrice}"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_20"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/bid_now_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:background="@drawable/white_shape_with_corner"
+                        android:gravity="center"
+                        android:onClick="@{handler::onClick}"
+                        android:padding="@dimen/dimen_16"
+                        android:text="@{data.alreadyBid ? @string/update_bid : @string/bid_now}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_30"
+                        app:colorFilter="@{@color/crop_green}"
+                        app:userVisibility="@{data.user.id}"
+                        app:visibilityType="@{View.GONE}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_50"
+                    android:background="@drawable/white_shape_with_corner"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:colorFilter="@{@color/detail_grey}"
+                    app:visibilityWithBoolean="@{data.hasBid}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_60"
+                        android:text="@string/congrats"
+                        android:textColor="@color/amber"
+                        android:textSize="@dimen/dimen_60" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_30"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="@{data.hasBid &amp;&amp; data.alreadyBid ? @string/bid_updated_successfully : @string/bid_placed_successfully}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_30" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_50"
+                    android:background="@drawable/white_shape_with_corner"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="@{handler.isAccepted(data) ? View.VISIBLE : View.GONE}"
+                    app:colorFilter="@{@color/detail_grey}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_60"
+                        android:text="@string/congrats"
+                        android:textColor="@color/amber"
+                        android:textSize="@dimen/dimen_60" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
+                        android:text="@string/you_won_bid"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_30" />
+
+                    <TextView
+                        android:id="@+id/pay_now_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:background="@drawable/white_shape_with_corner"
+                        android:gravity="center"
+                        android:onClick="@{handler::onClick}"
+                        android:padding="@dimen/dimen_16"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_30"
+                        android:textStyle="bold"
+                        app:colorFilter="@{@color/crop_green}"
+                        app:currencyTextWithPrefix="@{handler.getTenPercentOfAmount(data)}"
+                        app:prefix="@{@string/pay_now+` (`}"
+                        app:suffix="@{`)`}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_shape_with_stroke"
+                    android:gravity="center"
+                    app:visibilityWithBoolean="@{handler.isAccepted(data) || data.hasBid}">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_60"
+                        android:layout_height="@dimen/dimen_60"
+                        android:contentDescription="@string/app_name"
+                        app:srcCompat="@drawable/ic_thumb" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_marginTop="@dimen/dimen_30">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/detail_grey" />
+
+                <android.support.design.widget.TabLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:pager="@{viewPager}"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/crop_green"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabMode="fixed"
+                    app:tabs="@{tabs}" />
+
+            </RelativeLayout>
+
+            <com.sdei.farmx.customview.CustomPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:autoScroll="@{false}"
+                app:handleVisibility="@{false}"
+                app:pagerAdapter="@{tabs}"
+                app:resource="@{R.layout.row_detail_pager}"
+                app:type="@{`crops`}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:background="@color/detail_grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:text="@string/product_description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_60"
+                android:layout_marginEnd="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:text="@{data.description}"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/dimen_22"
+                app:visibility="@{data.description}" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

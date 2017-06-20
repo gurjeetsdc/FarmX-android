@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.fragment.InputDashboardFragment" />
+
+        <variable
+            name="items"
+            type="com.sdei.farmx.dataobject.RecyclerBindingList" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/footer_ll"
+                android:layout_margin="@dimen/dimen_3"
+                app:columnNum="@{3}"
+                app:gridAdapter="@{items.itemsList}"
+                android:visibility="@{items.itemsList.size() == 0 ? View.GONE : View.VISIBLE}"
+                app:itemClickListener="@{handler}"
+                app:layout="@{R.layout.row_farm_input}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_input_available"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_30"
+                android:visibility="@{items.itemsList.size() == 0 ? View.VISIBLE : View.GONE}" />
+
+            <LinearLayout
+                android:id="@+id/footer_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+                <include
+                    android:id="@+id/footer"
+                    layout="@layout/footer"
+                    app:firstActionDrawable="@{`sort_by`}"
+                    app:firstActionLabel="@{@string/sort_by}"
+                    app:footerColor="@{@color/input}"
+                    app:handler="@{handler}"
+                    app:secondActionDrawable="@{`filter`}"
+                    app:secondActionLabel="@{@string/filter}" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_input_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/dimen_100"
+            android:layout_marginEnd="@dimen/dimen_40"
+            android:onClick="@{handler::onClick}"
+            android:visibility="gone"
+            app:backgroundTint="@color/input"
+            app:srcCompat="@drawable/ic_fab_add" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>

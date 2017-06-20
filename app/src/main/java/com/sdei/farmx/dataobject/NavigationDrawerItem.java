@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class NavigationDrawerItem extends BaseObservable{
 
     private String itemName;
+    private String key;
 
     private int index;
     private int parentPosition;
@@ -18,6 +19,16 @@ public class NavigationDrawerItem extends BaseObservable{
     private boolean checked;
     private boolean showDivider;
     private ArrayList<NavigationDrawerItem> childItems;
+
+    @Bindable
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+        notifyPropertyChanged(BR.key);
+    }
 
     @Bindable
     public String getItemName() {

@@ -7,6 +7,24 @@ import com.sdei.farmx.BR;
 
 public class AppHeaderObject extends BaseObservable {
 
+    private String title;
+    private int backgroundDrawable;
+    private int backgroundColor;
+    private boolean showSearch;
+    private boolean hasCenteredImage;
+
+    private boolean showMarquee;
+
+    @Bindable
+    public boolean isShowMarquee() {
+        return showMarquee;
+    }
+
+    public void setShowMarquee(boolean showMarquee) {
+        this.showMarquee = showMarquee;
+        notifyPropertyChanged(BR.showMarquee);
+    }
+
     @Bindable
     public int getBackgroundDrawable() {
         return backgroundDrawable;
@@ -26,9 +44,6 @@ public class AppHeaderObject extends BaseObservable {
         this.backgroundColor = backgroundColor;
         notifyPropertyChanged(BR.backgroundColor);
     }
-
-    private int backgroundDrawable;
-    private int backgroundColor;
 
     @Bindable
     public boolean isShowSearch() {
@@ -50,7 +65,14 @@ public class AppHeaderObject extends BaseObservable {
         notifyPropertyChanged(BR.hasCenteredImage);
     }
 
-    private boolean showSearch;
-    private boolean hasCenteredImage;
+    @Bindable
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        notifyPropertyChanged(BR.title);
+    }
 
 }

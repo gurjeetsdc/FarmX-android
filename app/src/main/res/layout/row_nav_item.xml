@@ -39,36 +39,36 @@
                 android:layout_width="@dimen/dimen_30"
                 android:layout_height="@dimen/dimen_30"
                 android:contentDescription="@string/app_name"
-                app:background="@{item.drawable}"/>
+                android:layout_marginBottom="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:svgBackground="@{item.drawable}"/>
 
             <TextView
                 android:id="@+id/item_name_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:paddingStart="@dimen/dimen_18"
                 android:paddingEnd="@dimen/dimen_18"
                 android:text="@={item.itemName}"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/dimen_26" />
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/arrow_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_10"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="@drawable/ic_nav_arrow"
+                app:srcCompat="@drawable/ic_nav_arrow"
                 android:contentDescription="@string/app_name"
-                android:autoMirrored="true"
-                android:rotation="0"/>
+                android:visibility="@{(item.childItems == null || item.childItems.size() == 0) ? View.GONE : View.VISIBLE}"
+                android:rotation="@{item.checked ? 90 : 0}"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/nav_child_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_50"
             android:layout_marginStart="@dimen/dimen_50"
             android:orientation="vertical"
             app:child_views="@{item.childItems}"
@@ -79,7 +79,7 @@
             android:id="@+id/divider_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_light"
+            android:background="@color/nac_divider_color"
             android:visibility="@{item.showDivider ? View.VISIBLE : View.GONE}"/>
 
     </LinearLayout>

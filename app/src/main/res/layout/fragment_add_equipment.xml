@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sdei.farmx.R" />
+
+        <import type="android.view.View" />
+
+        <import type="com.sdei.farmx.helper.utils.AppConstants" />
+
+        <variable
+            name="data"
+            type="com.sdei.farmx.dataobject.Equipment" />
+
+        <variable
+            name="handler"
+            type="com.sdei.farmx.fragment.EquipmentAddFragment" />
+
+        <variable
+            name="timePeriodArray"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="distanceUnits"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="categories"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="manufacturerList"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="varieties"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="states"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="districts"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+        <variable
+            name="years"
+            type="java.util.ArrayList&lt;String&gt;" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submit_tv"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dimen_20"
+                android:paddingStart="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_10">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/name_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/equipment_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={data.name}"
+                        android:textColor="@color/text_black"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_22"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_8"
+                        android:text="@string/type"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24" />
+
+                    <RadioGroup
+                        android:id="@+id/rent_rg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rent_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_6"
+                            android:checked="@{data.rentSell.equals(AppConstants.API_STRING_CONSTANTS.RENT)}"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:text="@string/rent"
+                            android:textColor="@color/text_black"
+                            app:buttonTintList="@{R.color.amber}" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/sell_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_6"
+                            android:layout_marginStart="@dimen/dimen_10"
+                            android:checked="@{data.rentSell.equals(AppConstants.API_STRING_CONSTANTS.SELL)}"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:text="@string/sell"
+                            android:textColor="@color/text_black"
+                            app:buttonTintList="@{R.color.amber}" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/availability_date_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_6"
+                    android:layout_marginTop="@dimen/dimen_28"
+                    android:animateLayoutChanges="true"
+                    android:gravity="bottom"
+                    android:onClick="@{handler::onClick}"
+                    android:orientation="horizontal"
+                    android:visibility="@{data.rentSell.equals(AppConstants.API_STRING_CONSTANTS.RENT) ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_14"
+                        android:contentDescription="@string/app_name"
+                        app:srcCompat="@drawable/ic_calender" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/availability_date_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_8"
+                            android:layout_marginStart="@dimen/dimen_8"
+                            android:hint="@string/available_from"
+                            android:paddingBottom="@dimen/dimen_10"
+                            android:textColor="@color/text_black"
+                            android:textColorHint="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            app:prefix="@{``}"
+                            app:requiredDateFormat="@{AppConstants.DATE_FORMAT.FORMAT_2}"
+                            app:showDefaultValue="@{false}"
+                            app:textDate="@{data.itemDateObj.formatted}" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/dimen_10"
+                            android:layout_marginEnd="@dimen/dimen_8"
+                            android:layout_marginStart="@dimen/dimen_8"
+                            android:background="@color/grey_light" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:visibility="@{data.rentSell.equals(AppConstants.API_STRING_CONSTANTS.RENT) ? View.VISIBLE : View.GONE}">
+
+                    <com.sdei.farmx.customview.MyTextInputLayout
+                        android:id="@+id/time_period_til"
+                        style="@style/gray_edittext_theme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".73">
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/time_period_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/availability_period"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:text="@={data.avalibilityperiod}"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/dimen_24"
+                            app:backgroundTint="@color/text_black"
+                            app:enable="@{data.rentSell}"
+                            app:requiredStatus="@{AppConstants.API_STRING_CONSTANTS.RENT}" />
+
+                    </com.sdei.farmx.customview.MyTextInputLayout>
+
+                    <Spinner
+                        android:id="@+id/time_period_spinner"
+                        style="@style/gray_spinner_theme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".27"
+                        app:defaultSpinnerAdapter="@{timePeriodArray}"
+                        app:enable="@{data.rentSell}"
+                        app:requiredStatus="@{AppConstants.API_STRING_CONSTANTS.RENT}"
+                        app:selectedItem="@{data.avalibilityperiodUnits}" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/category_spinner"
+                    style="@style/gray_spinner_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:focusableInTouchMode="true"
+                    app:hint="@{@string/category}"
+                    app:hintTextColor="@{R.color.text_black}"
+                    app:layoutIndex="@{0}"
+                    app:selectedItem="@{data.categoryObj.name}"
+                    app:spinnerAdapter="@{categories}" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/variety_spinner"
+                    style="@style/gray_spinner_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    app:hint="@{@string/variety}"
+                    app:hintTextColor="@{R.color.text_black}"
+                    app:layoutIndex="@{0}"
+                    app:selectedItem="@{data.variety}"
+                    app:spinnerAdapter="@{varieties}" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/manufacturer_spinner"
+                    style="@style/gray_spinner_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    app:hint="@{@string/company_manufacturer}"
+                    app:hintTextColor="@{R.color.text_black}"
+                    app:layoutIndex="@{0}"
+                    app:selectedItem="@{data.manufacrurerObj.name}"
+                    app:spinnerAdapter="@{manufacturerList}" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/model_year_spinner"
+                    style="@style/gray_spinner_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    app:hint="@{@string/model_year}"
+                    app:hintTextColor="@{R.color.text_black}"
+                    app:layoutIndex="@{0}"
+                    app:selectedItem="@{data.modelyear}"
+                    app:spinnerAdapter="@{years}" />
+
+                <com.sdei.farmx.customview.MyTextInputLayout
+                    android:id="@+id/model_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/model_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/model"
+                        android:inputType="textVisiblePassword"
+                        android:maxLines="1"
+                        android:text="@={data.model}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </com.sdei.farmx.customview.MyTextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_6"
+                        android:layout_weight=".73"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_18"
+                            android:contentDescription="@string/app_name"
+                            app:srcCompat="@drawable/ic_rupee_icon" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/price_til"
+                            style="@style/gray_edittext_theme"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_6">
+
+                            <android.support.v7.widget.AppCompatEditText
+                                android:id="@+id/price_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/price"
+                                android:inputType="numberDecimal"
+                                android:maxLines="1"
+                                android:text="@={data.rate}"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/dimen_24"
+                                app:backgroundTint="@color/text_black" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/price_unit_spinner"
+                        style="@style/gray_spinner_theme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".27"
+                        android:visibility="@{data.rentSell.equals(AppConstants.API_STRING_CONSTANTS.RENT) ? View.VISIBLE : View.GONE}"
+                        app:defaultSpinnerAdapter="@{timePeriodArray}"
+                        app:selectedItem="@{data.priceUnit}" />
+
+                </LinearLayout>
+
+                <com.sdei.farmx.customview.MyTextInputLayout
+                    android:id="@+id/quantity_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/quantity_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/quantity"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={data.quantity}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </com.sdei.farmx.customview.MyTextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/address_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/address_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/address"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={data.address}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/city_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/city_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/city_village"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={data.city}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/state_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/state_spinner"
+                        style="@style/gray_spinner_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hint="@{@string/state}"
+                        app:hintTextColor="@{R.color.text_black}"
+                        app:layoutIndex="@{0}"
+                        app:selectedItem="@{data.state}"
+                        app:spinnerAdapter="@{states}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/districts_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/district_spinner"
+                        style="@style/gray_spinner_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hint="@{@string/district}"
+                        app:hintTextColor="@{R.color.text_black}"
+                        app:layoutIndex="@{0}"
+                        app:selectedItem="@{data.district}"
+                        app:spinnerAdapter="@{districts}" />
+
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/pincode_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/pincode_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:completionThreshold="3"
+                        android:hint="@string/pin_code"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:text="@={data.pincode}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_22"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_8"
+                        android:text="@string/payment_preference"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24" />
+
+                    <RadioGroup
+                        android:id="@+id/payment_rg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/cod_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_6"
+                            android:checked="@{data.paymentMethod.equals(AppConstants.API_STRING_CONSTANTS.COD)}"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:text="@string/cod"
+                            android:textColor="@color/text_black"
+                            app:buttonTintList="@{R.color.amber}" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/cheque_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_6"
+                            android:layout_marginStart="@dimen/dimen_10"
+                            android:checked="@{data.paymentMethod.equals(AppConstants.API_STRING_CONSTANTS.CHEQUE)}"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:text="@string/cheque"
+                            android:textColor="@color/text_black"
+                            app:buttonTintList="@{R.color.amber}" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/net_banking_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_6"
+                            android:layout_marginStart="@dimen/dimen_10"
+                            android:checked="@{data.paymentMethod.equals(AppConstants.API_STRING_CONSTANTS.NET_BANKING)}"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:text="@string/net_banking"
+                            android:textColor="@color/text_black"
+                            app:buttonTintList="@{R.color.amber}" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/description_til"
+                    style="@style/gray_edittext_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/description_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:hint="@string/description"
+                        android:inputType="textMultiLine|textNoSuggestions"
+                        android:lines="3"
+                        android:maxLines="3"
+                        android:text="@={data.description}"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/dimen_24"
+                        app:backgroundTint="@color/text_black" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- Image section-->
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/upload_image_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_50"
+                    android:background="@drawable/white_shape_with_corner_8"
+                    android:onClick="@{handler::onClick}"
+                    android:paddingBottom="@dimen/dimen_12"
+                    android:paddingEnd="@dimen/dimen_16"
+                    android:paddingStart="@dimen/dimen_16"
+                    android:paddingTop="@dimen/dimen_12"
+                    android:text="@string/upload_image"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_26"
+                    app:backgroundTint="@color/amber" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/images_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    app:columnNum="@{5}"
+                    app:gridAdapter="@{data.imagesPath}"
+                    app:itemClickListener="@{handler}"
+                    app:layout="@{R.layout.row_add_grid_image}" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/submit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/equipment"
+            android:gravity="center"
+            android:onClick="@{handler::onClick}"
+            android:padding="@dimen/dimen_16"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_30"
+            android:textStyle="bold"
+            app:textCaps="@{@string/submit}" />
+
+    </RelativeLayout>
+
+</layout>
+
